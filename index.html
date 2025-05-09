@@ -1,502 +1,130 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control - Montero Sport 1999</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-        }
-        .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-        .header {
-            background: linear-gradient(to right, #16a34a, #15803d);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            border-radius: 12px;
-            margin-bottom: 24px;
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-        .header p {
-            font-size: 1.125rem;
-            margin-top: 8px;
-            opacity: 0.9;
-        }
-        label {
-            font-weight: 600;
-            color: #374151;
-        }
-        input[type="text"], input[type="checkbox"], textarea, button {
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
-            padding: 10px 12px;
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        input[type="checkbox"] {
-            padding: 0; /* Reset padding for checkboxes */
-            height: 1.25rem;
-            width: 1.25rem;
-            margin-right: 0.5rem;
-            accent-color: #16a34a; /* Color del check */
-        }
-        input[type="text"]:focus, textarea:focus {
-            outline: none;
-            border-color: #16a34a; 
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
-        }
-        button {
-            background-color: #16a34a; 
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 10px 15px;
-        }
-        button:hover {
-            background-color: #15803d;
-        }
-        .button-secondary {
-            background-color: #e5e7eb;
-            color: #374151;
-            border: 1px solid #d1d5db;
-        }
-        .button-secondary:hover {
-            background-color: #d1d5db;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .info-item {
-            background-color: #f9fafb;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-        }
-        .info-item strong {
-            margin-bottom: 4px;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            color: #4b5563;
-        }
-        .info-item span {
-            color: #1f2937;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-         .main-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        #search-results div, .glossary-item, .checklist-item {
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            padding: 10px;
-            margin-top: 8px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        #search-results div:nth-child(odd), .glossary-item:nth-child(odd) {
-            background-color: #f0f2f5;
-        }
-         #search-results strong { 
-            background-color: #a7f3d0; 
-            font-weight: bold;
-            padding: 1px 3px;
-            border-radius: 3px;
-        }
-        .glossary-term {
-            font-weight: 600;
-            color: #1f2937;
-        }
-        .glossary-definition {
-            color: #4b5563;
-            margin-left: 10px;
-        }
-        .checklist-item label {
-            display: flex;
-            align-items: center;
-            font-weight: normal; /* Reset label weight for checklist items */
-            color: #374151;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Montero Sport 1999</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script defer>
+    let mantenimiento = [];
+    let gastos = [];
+    let fotos = [];
+
+    function agregarMantenimiento() {
+      const campo = document.getElementById('nuevo-mantenimiento');
+      if (campo.value.trim() !== '') {
+        mantenimiento.push(campo.value);
+        campo.value = '';
+        mostrarMantenimiento();
+      }
+    }
+
+    function mostrarMantenimiento() {
+      const lista = document.getElementById('lista-mantenimiento');
+      lista.innerHTML = mantenimiento.map(e => `<li>✅ ${e}</li>`).join('');
+    }
+
+    function agregarGasto() {
+      const descripcion = document.getElementById('desc-gasto').value;
+      const monto = document.getElementById('monto-gasto').value;
+      if (descripcion.trim() !== '' && monto.trim() !== '') {
+        gastos.push({ descripcion, monto });
+        document.getElementById('desc-gasto').value = '';
+        document.getElementById('monto-gasto').value = '';
+        mostrarGastos();
+      }
+    }
+
+    function mostrarGastos() {
+      const lista = document.getElementById('lista-gastos');
+      lista.innerHTML = gastos.map(g => `<li>💰 ${g.descripcion}: ₡${g.monto}</li>`).join('');
+    }
+
+    function agregarFoto() {
+      const input = document.getElementById('url-foto');
+      if (input.value.trim() !== '') {
+        fotos.push(input.value);
+        input.value = '';
+        mostrarGaleria();
+      }
+    }
+
+    function mostrarGaleria() {
+      const galeria = document.getElementById('galeria-fotos');
+      galeria.innerHTML = fotos.map(f => `<img src="${f}" alt="Foto" class="w-full md:w-1/3 p-2 rounded shadow">`).join('');
+    }
+  </script>
 </head>
-<body class="p-4 md:p-8">
+<body class="bg-gray-100 text-gray-800 font-sans p-4">
 
-    <div class="header">
-        <h1>Panel de Control Vehicular</h1>
-        <p>Mitsubishi Montero Sport 1999 (Jorge)</p>
-    </div>
+  <header class="bg-green-700 text-white text-center p-4 rounded-lg mb-6">
+    <h1 class="text-2xl font-bold">Mitsubishi Montero Sport 1999</h1>
+    <p class="text-sm">Guía personal de mantenimiento</p>
+  </header>
 
-    <div class="container mx-auto max-w-4xl">
-        <div class="card">
-            <div id="vehicle-title" class="main-title"></div>
-            <div id="vehicle-info">
-                </div>
-        </div>
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">🔧 Especificaciones básicas</h2>
+    <ul class="list-disc list-inside">
+      <li>Motor: 6G72 (3.0L V6 SOHC)</li>
+      <li>Transmisión: Automática R4AW3</li>
+      <li>Presión de llantas: 26 PSI (180 kPa)</li>
+      <li>Neumáticos: 265/70 R15 110S</li>
+      <li>Peso bruto: 2,268 kg</li>
+    </ul>
+  </section>
 
-        <div class="card">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Consultar Manual del Vehículo</h2>
-            <p class="text-sm text-gray-600 mb-3">
-                Utiliza la siguiente herramienta para realizar búsquedas rápidas en el contenido textual de tu manual PDF (basado en las primeras páginas).
-            </p>
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="manual-search-query" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Ej: 'SRS', 'torque', 'fusible'">
-                <button onclick="searchManual()" class="px-4 py-2 whitespace-nowrap">Buscar en Extracto</button>
-            </div>
-             <div class="mt-4">
-                <button onclick="openGitHubPDF()" class="w-full sm:w-auto button-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 inline-block mr-1 align-text-bottom">
-                        <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253a2.25 2.25 0 0 1 1.841.902l.065.098a.75.75 0 0 0 .64.35h2.092a.75.75 0 0 0 .639-.35l.065-.098A2.25 2.25 0 0 1 11.996 1H15.25a.75.75 0 0 1 .75.75v11.5a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1-.75-.75V1.75Zm8.75 4a.75.75 0 0 0-1.5 0v1.5h-1.5a.75.75 0 0 0 0 1.5h1.5v1.5a.75.75 0 0 0 1.5 0v-1.5h1.5a.75.75 0 0 0 0-1.5h-1.5V5.75Z"></path>
-                        <path d="M2.5 3.25a.75.75 0 0 0-1.5 0v7.5a.75.75 0 0 0 1.5 0v-7.5Z"></path>
-                    </svg>
-                    Abrir PDF Completo en GitHub
-                </button>
-                 <p class="text-xs text-gray-500 mt-1">Asegúrate de que el enlace al PDF esté configurado en el código.</p>
-            </div>
-            <h3 class="text-lg font-semibold mb-2 mt-6 text-gray-700">Resultados de la búsqueda en extracto:</h3>
-            <div id="search-results" class="max-h-80 overflow-y-auto p-2 bg-white border rounded-lg"> 
-                <p class="text-gray-500">Ingresa un término para buscar en el extracto del manual...</p>
-            </div>
-        </div>
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">🧰 Mantenimiento importante</h2>
+    <ul class="list-disc list-inside">
+      <li>Revisar diferencial y transmisión después de cruzar ríos.</li>
+      <li>Lubricar puntos de suspensión delantera y eje de propulsión.</li>
+      <li>Inspeccionar botas de caucho y mangueras de respiro.</li>
+      <li>Consultar el torque de apriete antes de armar componentes.</li>
+    </ul>
+  </section>
 
-        <div class="card">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Glosario de Términos del Manual</h2>
-            <div id="glossary-content" class="max-h-80 overflow-y-auto">
-                </div>
-        </div>
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">🛠️ Historial de Mantenimiento</h2>
+    <input id="nuevo-mantenimiento" type="text" placeholder="Ej. Cambio de aceite 01/05/25" class="border p-2 w-full rounded mb-2">
+    <button onclick="agregarMantenimiento()" class="bg-green-600 text-white px-4 py-2 rounded">Agregar</button>
+    <ul id="lista-mantenimiento" class="mt-2 list-disc list-inside"></ul>
+  </section>
 
-        <div class="card">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Checklist: Antes de Vadear un Arroyo</h2>
-            <p class="text-sm text-gray-600 mb-3">
-                Basado en la sección "Inspección y Servicio antes de Vadear un Arroyo" del manual.
-            </p>
-            <div id="fording-checklist-content">
-                </div>
-            <button onclick="saveChecklistStatus('fordingChecklist')" class="mt-4">Guardar Estado del Checklist</button>
-            <p id="fording-checklist-status" class="text-sm text-green-700 mt-2"></p>
-        </div>
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">💸 Registro de Gastos</h2>
+    <input id="desc-gasto" type="text" placeholder="Descripción" class="border p-2 w-full rounded mb-2">
+    <input id="monto-gasto" type="number" placeholder="Monto en colones" class="border p-2 w-full rounded mb-2">
+    <button onclick="agregarGasto()" class="bg-blue-600 text-white px-4 py-2 rounded">Registrar gasto</button>
+    <ul id="lista-gastos" class="mt-2 list-disc list-inside"></ul>
+  </section>
 
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">📅 Recordatorios</h2>
+    <ul class="list-disc list-inside">
+      <li>Revisión Técnica: Julio 2025</li>
+      <li>Marchamo: Pagar en Diciembre</li>
+      <li>Revisión de llantas: cada 6 meses</li>
+    </ul>
+  </section>
 
-        <div class="card">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Mis Notas Personales</h2>
-            <label for="personal-notes" class="block mb-2 text-sm font-medium text-gray-700">Añade tus apuntes, recordatorios o historial de mantenimiento aquí:</label>
-            <textarea id="personal-notes" rows="6" class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500" placeholder="Ej: Último cambio de aceite el 01/03/2025. Revisar neumáticos en 5000km..."></textarea>
-            <button onclick="saveNotes()" class="mt-4 px-4 py-2">Guardar Notas</button>
-            <p id="notes-status" class="text-sm text-green-700 mt-2"></p>
-        </div>
-    </div>
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">📄 Manual completo</h2>
+    <p>Consultá o descargá tu manual original desde aquí:</p>
+    <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/view?usp=sharing" class="text-blue-600 underline" target="_blank">
+      Ver Manual del Taller (PDF)
+    </a>
+  </section>
 
-    <script>
-        // Datos específicos de tu vehículo, Jorge
-        const yourVehicleData = {
-            "monteroSport1999Jorge": {
-                displayName: "Mitsubishi Montero Sport (1999)",
-                vin: "JA4LS31P4WP018774",
-                engineModel: "6G72 (3.0L V6 SOHC)",
-                transmission: "Automática R4AW3 (4WD)",
-                tires: "265/70 R15 110S",
-                tirePressure: "26 PSI (Recomendado por Jorge)",
-                fuelSystem: "MPI (Inyección Multipunto)",
-                dimensions: {
-                    overallLength: "4,545 mm",
-                    overallWidth: "1,775 mm (modelo wide)",
-                    overallHeight: "1,730 mm (sin carga)",
-                    wheelbase: "2,725 mm",
-                    treadFront: "1,465 mm",
-                    treadRear: "1,480 mm",
-                    groundClearance: "215 mm (sin carga)"
-                },
-                weights: {
-                    grossVehicleWeight: "5005 lbs (2268 kg)",
-                },
-                capacities: {
-                    fuelTank: "74 litros (Referencia K96WG)",
-                }
-            }
-        };
+  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
+    <h2 class="text-xl font-semibold mb-2">📸 Galería de Fotos</h2>
+    <input id="url-foto" type="url" placeholder="Pegá aquí la URL de tu foto" class="border p-2 w-full rounded mb-2">
+    <button onclick="agregarFoto()" class="bg-purple-600 text-white px-4 py-2 rounded">Agregar foto</button>
+    <div id="galeria-fotos" class="flex flex-wrap mt-4 gap-2"></div>
+  </section>
 
-        // Texto del manual traducido al español para la búsqueda
-        const manualTextContent = `
-GENERAL
-CONTENIDO
-CÓMO USAR ESTE MANUAL
-Alcance de las Explicaciones de Mantenimiento, Reparación y Servicio
-Definición de Términos
-Indicación del Par de Apriete
-Indicaciones del Modelo
-Explicación del Contenido del Manual
-CÓMO USAR LOS PUNTOS DE SERVICIO DE DIAGNÓSTICO/INSPECCIÓN.
-Contenido de Diagnóstico de Problemas
-Función de Diagnóstico
-Cómo Usar los Procedimientos de Inspección
-Puntos de Servicio de Medición de Conectores
-Inspección de Conectores
-Puntos de Servicio de Inspección para un Fusible Quemado
-Puntos a Notar para Fallos Intermitentes
-TRATAMIENTO ANTES/DESPUÉS DE VADEAR UN ARROYO
-Inspección y Servicio antes de Vadear un Arroyo
-Inspección y Servicio después de Vadear un Arroyo
-IDENTIFICACIÓN DEL VEHÍCULO
-Placa de Código de Información del Vehículo
-Modelos
-Código del Modelo
-Número de Chasis
-Número de Modelo del Motor
-ESPECIFICACIONES PRINCIPALES
-PRECAUCIONES ANTES DEL SERVICIO
-SISTEMA DE SUJECIÓN SUPLEMENTARIO (SRS)
-Precauciones de Servicio del SRS
-LUGARES DE APOYO PARA ELEVACIÓN Y GATO
-Posiciones de Soporte para un Gato de Garaje y Soportes de Eje
-Posiciones de Soporte para un Elevador de Un Solo Poste o Elevador de Doble Poste y Elevador H-BAR
-TABLA DE PAR DE APRIETE ESTÁNDAR DE PIEZAS
-ALCANCE DE LAS EXPLICACIONES DE MANTENIMIENTO, REPARACIÓN Y SERVICIO
-Este manual proporciona explicaciones, etc., sobre los procedimientos para la inspección, mantenimiento, reparación y servicio del modelo en cuestión. Sin embargo, tenga en cuenta que para los componentes relacionados con el motor y la transmisión, este manual cubre solo inspecciones en el vehículo, ajustes y los procedimientos de extracción e instalación de los componentes principales. Para obtener información detallada sobre la inspección, verificación, ajuste, desmontaje y montaje del motor, la transmisión y los componentes principales después de haber sido retirados del vehículo, consulte los manuales separados que cubren el motor y la transmisión.
-SERVICIO EN EL VEHÍCULO: "Servicio en el vehículo" son procedimientos para realizar inspecciones y ajustes de ubicaciones particularmente importantes con respecto a la construcción y para el mantenimiento y servicio, pero también se deben realizar otras inspecciones (holgura, juego, grietas, daños, etc.).
-INSPECCIÓN: Bajo este título se presentan los procedimientos de inspección y verificación que se realizarán utilizando herramientas especiales e instrumentos de medición y mediante el tacto, pero, para los procedimientos reales de mantenimiento y servicio, también se deben realizar siempre inspecciones visuales.
-DEFINICIÓN DE TÉRMINOS
-VALOR ESTÁNDAR: Indica el valor utilizado como estándar para juzgar la calidad de una pieza o conjunto en la inspección o el valor al que se corrige y ajusta la pieza o conjunto. Se da por tolerancia.
-LÍMITE: Muestra el estándar para juzgar la calidad de una pieza o conjunto en la inspeción y significa el valor máximo o mínimo dentro del cual la pieza o conjunto debe mantenerse funcionalmente o en resistencia. Es un valor establecido fuera del rango del valor estándar.
-VALOR DE REFERENCIA: Indica el valor de ajuste antes de comenzar el trabajo (presentado para facilitar los procedimientos de montaje y ajuste, y para que puedan completarse en menos tiempo).
-PRECAUCIÓN: Indica la presentación de información particularmente vital para el trabajador durante la realización de los procedimientos de mantenimiento y servicio para evitar la posibilidad de lesiones al trabajador, o daños a los componentes, o una reducción de la función o rendimiento del componente o vehículo, etc.
-INDICACIÓN DEL PAR DE APRIETE: El par de apriete que se muestra en este manual es un valor básico con una tolerancia de ±10%, excepto en los siguientes casos en que se indican los límites superior e inferior del par de apriete. (1) La tolerancia del valor básico está dentro de ±10%. (2) Se utilizan pernos especiales o similares. (3) Se utilizan métodos especiales de apriete.
-INDICACIONES DEL MODELO: M/T: Indica la transmisión manual. SOHC: Indica un motor con un solo árbol de levas en cabeza. MPI: Indica la inyección multipunto. 4WD: Indica los vehículos con tracción en las 4 ruedas. DIESEL: Indica un motor diésel.
-EXPLICACIÓN DEL CONTENIDO DEL MANUAL: Indica los procedimientos que se deben realizar antes de comenzar el trabajo en esa sección y los procedimientos que se deben realizar después de terminar el trabajo en esa sección. Diagrama de Componentes. Símbolos de lubricación. Procedimientos de Mantenimiento y Servicio. Pasos de extracción. Pasos de instalación. Pasos de montaje. Clasificaciones de los Principales Puntos de Mantenimiento/Servicio. Símbolos para Lubricación, Selladores y Adhesivos. Grasa. Sellador o adhesivo. Líquido de frenos o líquido de transmisión automática. Aceite de motor, aceite de engranajes o aceite del compresor del aire acondicionado. Cinta adhesiva o cinta de goma butílica.
-CONTENIDO DE DIAGNÓSTICO DE PROBLEMAS: FLUJO ESTÁNDAR DE DIAGNÓSTICO DE PROBLEMAS. Método de diagnóstico: Recopilación de información del cliente. Verificar el síntoma del problema. Leer el código de diagnóstico. Consultar la TABLA DE INSPECCIÓN PARA SÍNTOMAS DE PROBLEMAS. Después de tomar nota del código de mal funcionamiento, borrar la memoria del código de diagnóstico. Volver a verificar el síntoma del problema. Leer los códigos de diagnóstico. Consultar la TABLA DE INSPECCIÓN PARA CÓDIGOS DE DIAGNÓSTICO. FALLOS INTERMITENTES.
-FUNCIÓN DE DIAGNÓSTICO: MÉTODO DE LECTURA DE CÓDIGOS DE DIAGNÓSTICO. CUANDO SE USA EL MUT-II: Conecte el MUT-II al conector de diagnóstico. Precaución: Apague el interruptor de encendido antes de conectar o desconectar el MUT-II. CUANDO SE USA LA LÁMPARA DE ADVERTENCIA: Use la herramienta especial para conectar a tierra el terminal No.1 del conector de diagnóstico. Encienda el interruptor de encendido. Lea un código de diagnóstico observando cómo parpadea la lámpara de advertencia. Sistemas aplicables: MPI (lámpara de advertencia del motor), Control de crucero automático (indicador de control de crucero automático), ABS (lámpara de advertencia del ABS). MÉTODO PARA BORRAR CÓDIGOS DE DIAGNÓSTICO. CUANDO SE USA EL MUT-II: Borre el código de diagnóstico. CUANDO NO SE USA EL MUT-II: Gire el interruptor de encendido a OFF. Desconecte el cable de la batería durante 10 segundos o más. Después de que el motor se haya calentado, hágalo funcionar al ralentí durante unos 15 minutos.
-CÓMO USAR LOS PROCEDIMIENTOS DE INSPECCIÓN: Las causas de una alta frecuencia de problemas que ocurren en los circuitos electrónicos son generalmente los conectores, los componentes, la ECU y los mazos de cables entre los conectores, en ese orden. PROCEDIMIENTO DE VERIFICACIÓN. Causa probable. Lista de datos del MUT-II. Inspección del componente del interruptor de la ECU. Medir en el conector del interruptor. Verificar el siguiente conector. Reemplazar la ECS-ECU. Reparar. Inspeccionar la condición de contacto en cada terminal del conector. Precaución: Después de realizar la inspección del conector, asegúrese siempre de volver a conectar el conector como estaba antes. Confirmar que hay síntomas de problemas. Si los síntomas del problema aún persisten, existe la posibilidad de que haya un circuito abierto o un cortocircuito en el mazo de cables entre los conectores. INSPECCIÓN DEL MAZO DE CABLES: Verificar si hay un circuito abierto o un cortocircuito en el mazo de cables.
-PUNTOS DE SERVICIO DE MEDICIÓN DE CONECTORES: Gire el interruptor de encendido a OFF al conectar o desconectar los conectores. SI SE INSPECCIONA CON EL CONECTOR CONECTADO (CON EL CIRCUITO EN CONDICIÓN DE CONTINUIDAD). Conectores a prueba de agua: Use una herramienta especial (conector del mazo de cables). Conectores ordinarios (no impermeables): Verifique insertando la barra de prueba desde el lado del mazo de cables. SI SE INSPECCIONA CON EL CONECTOR DESCONECTADO. Al inspeccionar un pin hembra: Use una herramienta especial (mazo de cables de inspección para la presión de contacto del pin del conector). Al inspeccionar un pin macho: Toque el pin directamente con la barra de prueba. Precaución: Tenga cuidado de no cortocircuitar los pines del conector.
-TRATAMIENTO ANTES/DESPUÉS DE VADEAR UN ARROYO: Selle el cable del velocímetro con grasa o cinta resistente al agua. Inspeccione la funda guardapolvo y la manguera de ventilación en busca de grietas o daños, y reemplácelos si se encuentran grietas o daños. (Esto es un resumen, el manual original tiene más detalles e imágenes).
-Precauciones de Servicio del SRS: Espere al menos 60 segundos después de desconectar el cable de la batería. Nunca intente desmontar o reparar los componentes del SRS. Preste atención a las etiquetas de advertencia. Almacene los componentes del SRS en un lugar limpio y seco.
-`.trim(); 
+  <footer class="text-center text-sm mt-6 text-gray-600">
+    Hecho por Jorge | Montero Sport 1999 🚙
+  </footer>
 
-        // Datos para el Glosario
-        const glossaryData = [
-            { term: "M/T", definition: "Indica la transmisión manual, o modelos equipados con transmisión manual." },
-            { term: "SOHC", definition: "Indica un motor con un solo árbol de levas en cabeza (Single Overhead Camshaft), o un modelo equipado con dicho motor." },
-            { term: "MPI", definition: "Indica la inyección multipunto (Multipoint Injection), o motores equipados con inyección multipunto." },
-            { term: "4WD", definition: "Indica los vehículos con tracción en las 4 ruedas (4 Wheel Drive)." },
-            { term: "DIESEL", definition: "Indica un motor diésel, o modelos equipados con dicho motor." },
-            { term: "SRS", definition: "Sistema de Sujeción Suplementario (Supplemental Restraint System), comúnmente conocido como airbag." },
-            { term: "ECU", definition: "Unidad de Control Electrónico (Electronic Control Unit), el 'cerebro' que gestiona funciones del motor u otros sistemas." },
-            { term: "ABS", definition: "Sistema Antibloqueo de Frenos (Anti-lock Braking System)." },
-            { term: "MUT-II", definition: "Herramienta de diagnóstico Multi-Use Tester II, utilizada por los técnicos para comunicarse con los sistemas electrónicos del vehículo." },
-            { term: "VALOR ESTÁNDAR", definition: "Indica el valor utilizado como estándar para juzgar la calidad de una pieza o conjunto en la inspección o el valor al que se corrige y ajusta la pieza o conjunto." },
-            { term: "LÍMITE", definition: "Muestra el estándar para juzgar la calidad de una pieza o conjunto en la inspección y significa el valor máximo o mínimo dentro del cual la pieza o conjunto debe mantenerse funcionalmente o en resistencia." },
-            { term: "PRECAUCIÓN", definition: "Indica la presentación de información particularmente vital para el trabajador durante la realización de los procedimientos de mantenimiento y servicio para evitar la posibilidad de lesiones al trabajador, o daños a los componentes, etc." }
-        ];
-
-        // Datos para la Lista de Verificación "Antes de Vadear un Arroyo"
-        const fordingChecklistData = [
-            { id: "ford_seal_speedo", text: "Sellar el cable del velocímetro con grasa o cinta resistente al agua." },
-            { id: "ford_inspect_boot_hose", text: "Inspeccionar la funda guardapolvo y la manguera de ventilación en busca de grietas o daños, y reemplazarlos si es necesario." },
-            // Añadir más puntos si se extraen del manual completo. El PDF original tiene imágenes y más detalles.
-            // Por ejemplo, el manual original menciona inspeccionar puntos de lubricación de suspensión, dirección y cardán.
-            { id: "ford_check_lubrication_points", text: "Aplicar grasa a los puntos de lubricación de la suspensión delantera, varillaje de dirección y eje cardán (según manual)." },
-            { id: "ford_check_air_intake", text: "Asegurar que la toma de aire del motor esté alta y protegida del ingreso de agua." },
-            { id: "ford_check_electrical", text: "Proteger componentes eléctricos sensibles si es posible." }
-        ];
-
-
-        // Elementos del DOM
-        const infoElement = document.getElementById('vehicle-info');
-        const vehicleTitleElement = document.getElementById('vehicle-title');
-        const notesElement = document.getElementById('personal-notes');
-        const notesStatusElement = document.getElementById('notes-status');
-        const searchResultsElement = document.getElementById('search-results');
-        const searchInput = document.getElementById('manual-search-query');
-        const glossaryContentElement = document.getElementById('glossary-content');
-        const fordingChecklistContentElement = document.getElementById('fording-checklist-content');
-        const fordingChecklistStatusElement = document.getElementById('fording-checklist-status');
-
-
-        // Función para mostrar la información del vehículo
-        function displayVehicleInfo() {
-            const vehicle = yourVehicleData.monteroSport1999Jorge; 
-            vehicleTitleElement.textContent = vehicle.displayName; 
-            let htmlContent = '<div class="info-grid">'; 
-            const addItem = (label, value) => {
-                if (value) { 
-                    return `<div class="info-item"><strong>${label}:</strong> <span>${value}</span></div>`;
-                }
-                return ''; 
-            };
-            htmlContent += addItem("VIN", vehicle.vin);
-            htmlContent += addItem("Motor", vehicle.engineModel);
-            htmlContent += addItem("Transmisión", vehicle.transmission);
-            htmlContent += addItem("Neumáticos", vehicle.tires);
-            htmlContent += addItem("Presión de Neumáticos", vehicle.tirePressure);
-            htmlContent += addItem("Sistema de Combustible", vehicle.fuelSystem);
-
-            if (vehicle.dimensions) {
-                htmlContent += `<div class="info-item col-span-full text-lg font-semibold mt-3 mb-1 border-t pt-3">Dimensiones:</div>`;
-                for (const dimKey in vehicle.dimensions) {
-                    htmlContent += addItem(toDisplayCase(dimKey), vehicle.dimensions[dimKey]);
-                }
-            }
-            if (vehicle.weights) {
-                htmlContent += `<div class="info-item col-span-full text-lg font-semibold mt-3 mb-1 border-t pt-3">Pesos:</div>`;
-                 for (const weightKey in vehicle.weights) {
-                     htmlContent += addItem(toDisplayCase(weightKey), vehicle.weights[weightKey]);
-                }
-            }
-            if (vehicle.capacities) {
-                htmlContent += `<div class="info-item col-span-full text-lg font-semibold mt-3 mb-1 border-t pt-3">Capacidades:</div>`;
-                for (const capKey in vehicle.capacities) {
-                     htmlContent += addItem(toDisplayCase(capKey), vehicle.capacities[capKey]);
-                }
-            }
-            htmlContent += '</div>'; 
-            infoElement.innerHTML = htmlContent; 
-        }
-        
-        function toDisplayCase(str) {
-            str = str.replace(/([A-Z])/g, ' $1').replace(/_/g, ' ').replace(/-/g, ' ');
-            return str.replace(/\w\S*/g, function(txt){
-                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-            })
-            .replace('Overall', 'Total').replace('Tread', 'Ancho de Vía')
-            .replace('Ground Clearance', 'Altura Libre al Suelo').replace('Kerb Weight', 'Peso en Vacío')
-            .replace('Gross Vehicle Weight', 'Peso Bruto Vehicular')
-            .replace('Max Axle Weight Front', 'Peso Máximo Eje Delantero')
-            .replace('Max Axle Weight Rear', 'Peso Máximo Eje Trasero')
-            .replace('Fuel Tank', 'Tanque de Combustible');
-        }
-
-        function saveNotes() {
-            const notes = notesElement.value;
-            localStorage.setItem('monteroSport1999Jorge_notes', notes);
-            notesStatusElement.textContent = 'Notas guardadas exitosamente!';
-            setTimeout(() => { notesStatusElement.textContent = ''; }, 3000);
-        }
-        
-        function searchManual() {
-            const query = searchInput.value.trim().toLowerCase(); 
-            searchResultsElement.innerHTML = ''; 
-            if (!query) { 
-                searchResultsElement.innerHTML = '<p class="text-gray-500">Por favor, ingresa un término de búsqueda.</p>';
-                return;
-            }
-            const lines = manualTextContent.split('\n'); 
-            let foundResults = 0;
-            const maxResults = 20; 
-            lines.forEach(line => {
-                if (foundResults >= maxResults) return; 
-                if (line.toLowerCase().includes(query)) { 
-                    const resultDiv = document.createElement('div');
-                    const highlightedLine = line.replace(new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), '<strong>$&</strong>');
-                    resultDiv.innerHTML = highlightedLine;
-                    searchResultsElement.appendChild(resultDiv);
-                    foundResults++;
-                }
-            });
-            if (foundResults === 0) { 
-                searchResultsElement.innerHTML = '<p class="text-gray-500">No se encontraron coincidencias para tu búsqueda.</p>';
-            } else if (foundResults >= maxResults) { 
-                 const notice = document.createElement('p');
-                 notice.className = 'text-sm text-gray-600 mt-2';
-                 notice.textContent = `Se muestran los primeros ${maxResults} resultados. Para una búsqueda exhaustiva, consulta tu PDF.`;
-                 searchResultsElement.appendChild(notice);
-            }
-        }
-
-        function openGitHubPDF() {
-            const pdfUrl = 'https://raw.githubusercontent.com/sejo48/manual-montero-sport/main/00.pdf'; 
-            if (pdfUrl === '#' || pdfUrl.includes('AQUÍ_PEGAS_EL_ENLACE')) { 
-                alert('Por favor, configura la URL de tu PDF en GitHub en el archivo HTML (función openGitHubPDF).');
-            } else {
-                window.open(pdfUrl, '_blank'); 
-            }
-        }
-
-        // --- Funciones para Glosario y Checklist ---
-        function populateGlossary() {
-            if (!glossaryContentElement) return;
-            let content = '';
-            glossaryData.forEach(item => {
-                content += `<div class="glossary-item">
-                                <span class="glossary-term">${item.term}:</span>
-                                <span class="glossary-definition">${item.definition}</span>
-                            </div>`;
-            });
-            glossaryContentElement.innerHTML = content || '<p class="text-gray-500">Glosario no disponible.</p>';
-        }
-
-        function populateChecklist(checklistId, data, containerElement) {
-            if (!containerElement) return;
-            let content = '';
-            const savedState = JSON.parse(localStorage.getItem(checklistId)) || {};
-
-            data.forEach(item => {
-                const isChecked = savedState[item.id] || false;
-                content += `<div class="checklist-item">
-                                <label for="${item.id}">
-                                    <input type="checkbox" id="${item.id}" name="${item.id}" ${isChecked ? 'checked' : ''}>
-                                    ${item.text}
-                                </label>
-                            </div>`;
-            });
-            containerElement.innerHTML = content || '<p class="text-gray-500">Checklist no disponible.</p>';
-        }
-
-        function saveChecklistStatus(checklistId) {
-            const checklistContainer = document.getElementById(`${checklistId}-content`);
-            if (!checklistContainer) return;
-
-            const checkboxes = checklistContainer.querySelectorAll('input[type="checkbox"]');
-            const status = {};
-            checkboxes.forEach(checkbox => {
-                status[checkbox.id] = checkbox.checked;
-            });
-            localStorage.setItem(checklistId, JSON.stringify(status));
-            
-            const statusElement = document.getElementById(`${checklistId}-status`);
-            if (statusElement) {
-                statusElement.textContent = 'Estado del checklist guardado!';
-                setTimeout(() => { statusElement.textContent = ''; }, 3000);
-            }
-        }
-        
-        // --- Carga inicial ---
-        function loadUserSpecificData() {
-            const savedNotes = localStorage.getItem('monteroSport1999Jorge_notes');
-            if (savedNotes) {
-                notesElement.value = savedNotes;
-            }
-            displayVehicleInfo();
-            populateGlossary();
-            populateChecklist('fordingChecklist', fordingChecklistData, fordingChecklistContentElement);
-        }
-
-        searchInput.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                searchManual();
-            }
-        });
-        
-        window.onload = loadUserSpecificData;
-
-    </script>
 </body>
 </html>

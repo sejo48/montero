@@ -1,130 +1,546 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mi Montero Sport 1999</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script defer>
-    let mantenimiento = [];
-    let gastos = [];
-    let fotos = [];
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitsubishi Montero Sport 1999</title>
+    <style>
+        /* Estilos generales del cuerpo de la página */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef;
+            color: #343a40;
+        }
 
-    function agregarMantenimiento() {
-      const campo = document.getElementById('nuevo-mantenimiento');
-      if (campo.value.trim() !== '') {
-        mantenimiento.push(campo.value);
-        campo.value = '';
-        mostrarMantenimiento();
-      }
-    }
+        .main-container { /* Contenedor para centrar el contenido */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-    function mostrarMantenimiento() {
-      const lista = document.getElementById('lista-mantenimiento');
-      lista.innerHTML = mantenimiento.map(e => `<li>✅ ${e}</li>`).join('');
-    }
+        /* Contenedor principal del vehículo */
+        .vehiculo {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid #dee2e6;
+            position: relative;
+        }
 
-    function agregarGasto() {
-      const descripcion = document.getElementById('desc-gasto').value;
-      const monto = document.getElementById('monto-gasto').value;
-      if (descripcion.trim() !== '' && monto.trim() !== '') {
-        gastos.push({ descripcion, monto });
-        document.getElementById('desc-gasto').value = '';
-        document.getElementById('monto-gasto').value = '';
-        mostrarGastos();
-      }
-    }
+        /* Imagen de portada */
+        .cover-image-container {
+            width: 100%;
+            max-height: 300px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px;
+        }
 
-    function mostrarGastos() {
-      const lista = document.getElementById('lista-gastos');
-      lista.innerHTML = gastos.map(g => `<li>💰 ${g.descripcion}: ₡${g.monto}</li>`).join('');
-    }
+        /* Encabezados */
+        h2, h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 8px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        h2 { font-size: 1.8em; margin-top: 0; }
+        h3 { font-size: 1.4em; }
 
-    function agregarFoto() {
-      const input = document.getElementById('url-foto');
-      if (input.value.trim() !== '') {
-        fotos.push(input.value);
-        input.value = '';
-        mostrarGaleria();
-      }
-    }
+        /* Listas */
+        ul { list-style-type: none; padding-left: 0; }
+        ul li { padding: 8px 0; border-bottom: 1px solid #f1f1f1; }
+        ul li:last-child { border-bottom: none; }
+        li strong { color: #495057; min-width: 180px; display: inline-block; }
 
-    function mostrarGaleria() {
-      const galeria = document.getElementById('galeria-fotos');
-      galeria.innerHTML = fotos.map(f => `<img src="${f}" alt="Foto" class="w-full md:w-1/3 p-2 rounded shadow">`).join('');
-    }
-  </script>
+        /* Botones generales */
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 10px;
+            margin-right: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        button:hover { background-color: #0056b3; transform: translateY(-1px); }
+        button:active { transform: translateY(0px); }
+
+        #btn-config-fotos { background-color: #6c757d; }
+        #btn-config-fotos:hover { background-color: #5a6268; }
+
+        textarea#notas-montero {
+            width: calc(100% - 22px); padding: 10px; margin-top: 15px;
+            border-radius: 6px; border: 1px solid #ced4da; min-height: 100px;
+            font-family: inherit; font-size: 0.95em; box-sizing: border-box;
+        }
+
+        /* Contenedor de la galería principal de fotos */
+        #fotos-montero-display {
+            margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;
+        }
+        .photo-display-item {
+            width: calc(25% - 10px); /* 4 fotos por fila */
+            border-radius: 4px; 
+            border: 1px solid #ddd;
+            background-color: #f8f9fa; /* Fondo ligero para cada item */
+            padding: 5px; /* Espacio interno */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column; /* Apilar imagen y detalles */
+            align-items: center; /* Centrar contenido */
+        }
+        .photo-display-item img {
+            width: 100%; 
+            height: 100px; /* Altura fija para la imagen */
+            object-fit: cover; 
+            display: block;
+            border-radius: 3px; /* Bordes redondeados para la imagen */
+            cursor: pointer; /* Indicar que es clickeable */
+            margin-bottom: 5px; /* Espacio entre imagen y detalles */
+        }
+        .photo-display-item-details { /* Estilo para los detalles debajo de la foto */
+            font-size: 0.75em;
+            color: #333;
+            text-align: center;
+            width: 100%;
+            padding: 2px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; /* Para que los detalles largos no rompan el layout */
+            cursor: default; /* Cursor normal para el texto */
+        }
+
+
+        input[type="file"] { display: none; }
+
+        /* --- Estilos para Modales --- */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0,0,0,0.6);
+            padding-top: 50px; 
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background-color: #fefefe; margin: auto; padding: 20px;
+            border: 1px solid #888; width: 85%; 
+            max-width: 750px; 
+            border-radius: 8px; position: relative;
+        }
+        .modal-close-btn {
+            color: #aaa; float: right; font-size: 28px;
+            font-weight: bold; cursor: pointer;
+        }
+        .modal-close-btn:hover, .modal-close-btn:focus {
+            color: black; text-decoration: none;
+        }
+
+        /* Modal de Configuración de Fotos */
+        #config-fotos-gallery {
+            display: flex; flex-wrap: wrap; gap: 15px; 
+            max-height: 350px; 
+            overflow-y: auto; padding: 10px;
+            border: 1px solid #eee; margin-bottom:15px;
+        }
+        .config-photo-item {
+            width: calc(33.333% - 10px); /* 3 fotos por fila para más espacio */
+            border: 1px solid #ccc; padding: 8px; border-radius: 4px;
+            text-align: center; display: flex; flex-direction: column; gap: 5px;
+        }
+        .config-photo-item img {
+            max-width: 100%; height: 70px; object-fit: contain; margin-bottom: 5px;
+        }
+        .config-photo-item textarea { 
+            width: calc(100% - 10px); 
+            min-height: 40px;
+            font-size: 0.85em;
+            padding: 5px;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+            box-sizing: border-box;
+            resize: vertical; 
+        }
+        .config-photo-item .checkbox-container { 
+             display: flex; align-items: center; justify-content: center; margin-top: 5px;
+        }
+        .config-photo-item input[type="checkbox"] { margin-right: 5px; }
+
+        #pin-input-container { margin-top: 15px; }
+        #pin-input {
+            padding: 8px; margin-right: 10px; border: 1px solid #ccc; border-radius: 4px;
+        }
+        #btn-delete-selected { background-color: #dc3545; }
+        #btn-delete-selected:hover { background-color: #c82333; }
+
+        /* Modal de Imagen Fullscreen */
+        #fullscreen-image-modal .modal-content {
+            background-color: transparent; border: none; width: auto; max-width: 90vw;
+            height: auto; max-height: 90vh; padding:0;
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center;
+        }
+        #fullscreen-image {
+            max-width: 100%; max-height: 80vh; 
+            display: block; border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        #fullscreen-details {
+            color: #fff; text-align: center; margin-top: 10px;
+            padding: 5px 10px; background-color: rgba(0,0,0,0.5); border-radius: 4px;
+            max-width: 70%; font-size: 0.9em;
+        }
+        #fullscreen-image-modal .modal-close-btn {
+            position: absolute; top: 15px; right: 35px;
+            color: #f1f1f1; font-size: 40px;
+        }
+
+        /* Media Query */
+        @media (max-width: 700px) {
+            .vehiculo { width: 95%; padding: 20px 15px; }
+            .cover-image-container { max-height: 200px; }
+            h2 { font-size: 1.6em; } h3 { font-size: 1.3em; }
+            button { width: calc(100% - 10px); margin-right: 0; margin-bottom: 10px; }
+            li strong { min-width: auto; display: block; margin-bottom: 3px; font-weight: bold; }
+            
+            .photo-display-item { width: calc(33.333% - 8px); } /* 3 fotos por fila */
+            .photo-display-item img { height: 80px; }
+            .photo-display-item-details { font-size: 0.7em; }
+
+
+            .config-photo-item { width: calc(50% - 10px); } 
+            .config-photo-item img { height: 60px; }
+
+            .modal-content { width: 95%; } 
+            #fullscreen-image-modal .modal-content { max-width: 95vw; max-height: 95vh; }
+            #fullscreen-details { font-size: 0.8em; max-width: 90%;}
+        }
+         @media (max-width: 480px) {
+            .photo-display-item { width: calc(50% - 5px); } /* 2 fotos por fila */
+            .photo-display-item img { height: 70px; }
+            .config-photo-item { width: 100%; } 
+         }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans p-4">
+<body>
 
-  <header class="bg-green-700 text-white text-center p-4 rounded-lg mb-6">
-    <h1 class="text-2xl font-bold">Mitsubishi Montero Sport 1999</h1>
-    <p class="text-sm">Guía personal de mantenimiento</p>
-  </header>
+<div class="main-container">
+    <div class="vehiculo" id="montero">
+        <div class="cover-image-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyeJiADyhmrZ1SgyH6-clYmHFxgMwvg7NfQMhNyS93v7kWiIgWe-ew8EFpaDwRoIKHNmi973QmoGW5DCuUCyc-7AeG99yIHoFH2DOwyOcLXFZtgX0eUZkwg3AuN9HN3iqLddvQlf4ncHbSKpjGADYHWf-IzeIK8zrQ2DgCDuexxmBAiuRFv9HHmxXvH3k/s320/20240821_162930.jpg" alt="Portada del Mitsubishi Montero Sport" class="cover-image"
+                 onerror="this.style.display='none'; console.warn('No se pudo cargar la imagen de portada.');">
+        </div>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">🔧 Especificaciones básicas</h2>
-    <ul class="list-disc list-inside">
-      <li>Motor: 6G72 (3.0L V6 SOHC)</li>
-      <li>Transmisión: Automática R4AW3</li>
-      <li>Presión de llantas: 26 PSI (180 kPa)</li>
-      <li>Neumáticos: 265/70 R15 110S</li>
-      <li>Peso bruto: 2,268 kg</li>
-    </ul>
-  </section>
+        <h2>Mitsubishi Montero Sport 1999</h2>
+        <ul>
+            <li><strong>Motor:</strong> 6G72 V6 (2.972 cc)</li>
+            <li><strong>Potencia:</strong> hasta 177 hp (132 kW) @ 5000-5500 RPM (SOHC 12V)</li>
+            <li><strong>Torque:</strong> hasta 255 Nm (188 lb-ft) @ 4000-4500 RPM</li>
+            </ul>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">🧰 Mantenimiento importante</h2>
-    <ul class="list-disc list-inside">
-      <li>Revisar diferencial y transmisión después de cruzar ríos.</li>
-      <li>Lubricar puntos de suspensión delantera y eje de propulsión.</li>
-      <li>Inspeccionar botas de caucho y mangueras de respiro.</li>
-      <li>Consultar el torque de apriete antes de armar componentes.</li>
-    </ul>
-  </section>
+        <h3>🔧 Detalles del Motor 6G72 (SOHC 12V)</h3>
+        <ul>
+            <li><strong>Configuración:</strong> V6 a 60°</li>
+            </ul>
+        
+        <hr style="margin-top: 20px; margin-bottom: 20px;">
+        <h3>Gestión de Fotos y Notas</h3>
+        <button onclick="abrirCamara()">Tomar Foto</button>
+        <button id="btn-config-fotos" onclick="abrirModalConfiguracionFotos()">Configurar Fotos</button>
+        <input type="file" accept="image/*" capture="environment" onchange="procesarFotoCargada(event)" id="file-montero" />
+        
+        <div id="fotos-montero-display">
+            </div>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">🛠️ Historial de Mantenimiento</h2>
-    <input id="nuevo-mantenimiento" type="text" placeholder="Ej. Cambio de aceite 01/05/25" class="border p-2 w-full rounded mb-2">
-    <button onclick="agregarMantenimiento()" class="bg-green-600 text-white px-4 py-2 rounded">Agregar</button>
-    <ul id="lista-mantenimiento" class="mt-2 list-disc list-inside"></ul>
-  </section>
+        <textarea id="notas-montero" placeholder="Notas de mantenimiento generales..."></textarea>
+        <button onclick="guardarNotasGenerales()">Guardar Notas Generales</button>
+    </div>
+</div>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">💸 Registro de Gastos</h2>
-    <input id="desc-gasto" type="text" placeholder="Descripción" class="border p-2 w-full rounded mb-2">
-    <input id="monto-gasto" type="number" placeholder="Monto en colones" class="border p-2 w-full rounded mb-2">
-    <button onclick="agregarGasto()" class="bg-blue-600 text-white px-4 py-2 rounded">Registrar gasto</button>
-    <ul id="lista-gastos" class="mt-2 list-disc list-inside"></ul>
-  </section>
+<div id="config-fotos-modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close-btn" onclick="cerrarModalConfiguracionFotos()">&times;</span>
+        <h4>Configuración de Fotos</h4>
+        <p>Selecciona las fotos que deseas eliminar e ingresa o edita sus detalles. Luego, ingresa el PIN para eliminar.</p>
+        <div id="config-fotos-gallery">
+            </div>
+        <div id="pin-input-container">
+            <label for="pin-input">PIN para eliminar:</label>
+            <input type="password" id="pin-input" maxlength="4" autocomplete="off">
+            <button id="btn-delete-selected" onclick="solicitarBorradoFotos()">Eliminar Seleccionadas</button>
+        </div>
+    </div>
+</div>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">📅 Recordatorios</h2>
-    <ul class="list-disc list-inside">
-      <li>Revisión Técnica: Julio 2025</li>
-      <li>Marchamo: Pagar en Diciembre</li>
-      <li>Revisión de llantas: cada 6 meses</li>
-    </ul>
-  </section>
+<div id="fullscreen-image-modal" class="modal" onclick="cerrarImagenFullscreen(event)">
+    <span class="modal-close-btn" onclick="cerrarImagenFullscreen(null, true)">&times;</span>
+    <img class="modal-content" id="fullscreen-image">
+    <div id="fullscreen-details"></div> </div>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">📄 Manual completo</h2>
-    <p>Consultá o descargá tu manual original desde aquí:</p>
-    <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/view?usp=sharing" class="text-blue-600 underline" target="_blank">
-      Ver Manual del Taller (PDF)
-    </a>
-  </section>
 
-  <section class="bg-white p-4 rounded-lg shadow-md mb-4">
-    <h2 class="text-xl font-semibold mb-2">📸 Galería de Fotos</h2>
-    <input id="url-foto" type="url" placeholder="Pegá aquí la URL de tu foto" class="border p-2 w-full rounded mb-2">
-    <button onclick="agregarFoto()" class="bg-purple-600 text-white px-4 py-2 rounded">Agregar foto</button>
-    <div id="galeria-fotos" class="flex flex-wrap mt-4 gap-2"></div>
-  </section>
+<script>
+    // Array para almacenar la información de las fotos cargadas
+    // Cada elemento será un objeto: { id: string, src: string, name: string, details: string }
+    let fotosCargadas = []; 
+    const VEHICULO_ID = 'montero';
 
-  <footer class="text-center text-sm mt-6 text-gray-600">
-    Hecho por Jorge | Montero Sport 1999 🚙
-  </footer>
+    /**
+     * Abre el selector de archivos o la cámara.
+     */
+    function abrirCamara() {
+        document.getElementById('file-montero').click();
+    }
+
+    /**
+     * Procesa la foto cargada, la añade al array y actualiza la vista.
+     * @param {Event} event - Evento del input file.
+     */
+    function procesarFotoCargada(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const fotoId = 'foto_' + Date.now(); 
+            fotosCargadas.push({
+                id: fotoId,
+                src: e.target.result,
+                name: file.name,
+                details: '' // Inicializar detalles vacíos
+            });
+            renderizarFotosPrincipales();
+            console.log('Foto añadida:', file.name, fotoId);
+        }
+        reader.readAsDataURL(file);
+        event.target.value = null; 
+    }
+
+    /**
+     * Renderiza las fotos en la vista principal (#fotos-montero-display).
+     * Ahora incluye los detalles visibles debajo de cada imagen.
+     */
+    function renderizarFotosPrincipales() {
+        const displayDiv = document.getElementById('fotos-montero-display');
+        displayDiv.innerHTML = ''; 
+
+        fotosCargadas.forEach(foto => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('photo-display-item');
+            // El evento onclick para abrir en fullscreen ahora está en la imagen directamente
+            // para no interferir si hubiera otros elementos clickeables en itemDiv.
+
+            const img = document.createElement('img');
+            img.src = foto.src;
+            img.alt = 'Foto: ' + foto.name;
+            img.onclick = () => abrirImagenFullscreen(foto.src, foto.details); // Hacer clickeable la imagen
+            
+            // Tooltip con detalles completos al pasar el mouse sobre la imagen
+            if (foto.details && foto.details.trim() !== '') {
+                img.title = foto.details; 
+            }
+            
+            itemDiv.appendChild(img);
+
+            // Mostrar detalles debajo de la imagen
+            if (foto.details && foto.details.trim() !== '') {
+                const detailsP = document.createElement('p');
+                detailsP.classList.add('photo-display-item-details');
+                detailsP.textContent = foto.details;
+                itemDiv.appendChild(detailsP);
+            } else {
+                // Añadir un placeholder o dejar vacío si no hay detalles
+                const emptyDetailsP = document.createElement('p');
+                emptyDetailsP.classList.add('photo-display-item-details');
+                emptyDetailsP.innerHTML = '&nbsp;'; // Espacio para mantener altura si es necesario
+                itemDiv.appendChild(emptyDetailsP);
+            }
+            
+            displayDiv.appendChild(itemDiv);
+        });
+    }
+
+    /**
+     * Abre el modal de configuración de fotos y lo puebla.
+     */
+    function abrirModalConfiguracionFotos() {
+        const galleryDiv = document.getElementById('config-fotos-gallery');
+        galleryDiv.innerHTML = ''; 
+
+        if (fotosCargadas.length === 0) {
+            galleryDiv.innerHTML = '<p>No hay fotos cargadas para configurar.</p>';
+        } else {
+            fotosCargadas.forEach(foto => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('config-photo-item');
+
+                const img = document.createElement('img');
+                img.src = foto.src;
+                img.alt = foto.name;
+
+                const detailsTextarea = document.createElement('textarea');
+                detailsTextarea.placeholder = 'Detalles de la foto...';
+                detailsTextarea.value = foto.details;
+                detailsTextarea.oninput = function() {
+                    const fotoIndex = fotosCargadas.findIndex(f => f.id === foto.id);
+                    if (fotoIndex !== -1) {
+                        fotosCargadas[fotoIndex].details = this.value;
+                        renderizarFotosPrincipales(); // Actualizar vista principal para reflejar cambios en detalles
+                    }
+                };
+                
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.classList.add('checkbox-container');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = foto.id;
+                checkbox.id = 'chk_' + foto.id;
+                
+                const label = document.createElement('label');
+                label.htmlFor = 'chk_' + foto.id;
+                label.textContent = " Marcar para borrar";
+
+                checkboxContainer.appendChild(checkbox);
+                checkboxContainer.appendChild(label);
+
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(detailsTextarea); 
+                itemDiv.appendChild(checkboxContainer);
+                galleryDiv.appendChild(itemDiv);
+            });
+        }
+        document.getElementById('pin-input').value = ''; 
+        document.getElementById('config-fotos-modal').style.display = 'block';
+    }
+
+    /**
+     * Cierra el modal de configuración de fotos.
+     */
+    function cerrarModalConfiguracionFotos() {
+        document.getElementById('config-fotos-modal').style.display = 'none';
+        renderizarFotosPrincipales(); 
+    }
+
+    /**
+     * Solicita el PIN y procesa el borrado de fotos seleccionadas.
+     */
+    function solicitarBorradoFotos() {
+        const pinIngresado = document.getElementById('pin-input').value;
+        const PIN_CORRECTO = '8384';
+
+        if (pinIngresado !== PIN_CORRECTO) {
+            alert('PIN incorrecto. No se pueden eliminar las fotos.');
+            document.getElementById('pin-input').focus();
+            return;
+        }
+
+        const checkboxes = document.querySelectorAll('#config-fotos-gallery input[type="checkbox"]:checked');
+        const idsParaBorrar = Array.from(checkboxes).map(cb => cb.value);
+
+        if (idsParaBorrar.length === 0) {
+            alert('No has seleccionado ninguna foto para eliminar.');
+            return;
+        }
+
+        fotosCargadas = fotosCargadas.filter(foto => !idsParaBorrar.includes(foto.id));
+        
+        renderizarFotosPrincipales(); 
+        cerrarModalConfiguracionFotos(); 
+        alert(idsParaBorrar.length + ' foto(s) eliminada(s) correctamente.');
+        console.log('Fotos eliminadas con IDs:', idsParaBorrar);
+    }
+
+    /**
+     * Abre el modal de imagen a pantalla completa.
+     * @param {string} imageSrc - La URL de la imagen a mostrar.
+     * @param {string} imageDetails - Los detalles de la imagen.
+     */
+    function abrirImagenFullscreen(imageSrc, imageDetails) {
+        document.getElementById('fullscreen-image').src = imageSrc;
+        const detailsDiv = document.getElementById('fullscreen-details');
+        if (imageDetails && imageDetails.trim() !== '') {
+            detailsDiv.textContent = imageDetails;
+            detailsDiv.style.display = 'block';
+        } else {
+            detailsDiv.textContent = '';
+            detailsDiv.style.display = 'none';
+        }
+        document.getElementById('fullscreen-image-modal').style.display = 'flex';
+    }
+
+    /**
+     * Cierra el modal de imagen a pantalla completa.
+     */
+    function cerrarImagenFullscreen(event, forceClose = false) {
+        const modal = document.getElementById('fullscreen-image-modal');
+        // Cerrar si se hace clic en el fondo, en el botón X, o en la propia imagen
+        if (forceClose || (event && (event.target === modal || event.target.id === 'fullscreen-image'))) { 
+            modal.style.display = 'none';
+            document.getElementById('fullscreen-image').src = ''; 
+            document.getElementById('fullscreen-details').textContent = '';
+        }
+    }
+    
+    /**
+     * Guarda las notas generales.
+     */
+    function guardarNotasGenerales() {
+        const notasTextarea = document.getElementById('notas-montero');
+        if (notasTextarea) {
+            const notas = notasTextarea.value;
+            localStorage.setItem('notas_generales_montero', notas); 
+            console.log('Notas generales guardadas');
+            
+            const botonGuardar = notasTextarea.nextElementSibling; 
+            const mensajeOriginalBoton = botonGuardar.textContent;
+            botonGuardar.textContent = '¡Guardado!';
+            setTimeout(() => {
+                botonGuardar.textContent = mensajeOriginalBoton;
+            }, 2000); 
+        }
+    }
+
+    /**
+     * Carga inicial de datos.
+     */
+    window.onload = function() {
+        const notasGeneralesGuardadas = localStorage.getItem('notas_generales_montero');
+        const notasTextarea = document.getElementById('notas-montero');
+        if (notasGeneralesGuardadas && notasTextarea) {
+            notasTextarea.value = notasGeneralesGuardadas;
+        }
+        renderizarFotosPrincipales(); 
+
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                if (document.getElementById('config-fotos-modal').style.display === 'block') {
+                    cerrarModalConfiguracionFotos();
+                }
+                if (document.getElementById('fullscreen-image-modal').style.display === 'flex') {
+                    cerrarImagenFullscreen(null, true);
+                }
+            }
+        });
+    };
+</script>
 
 </body>
 </html>

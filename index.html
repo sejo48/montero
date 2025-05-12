@@ -134,9 +134,6 @@
                         <button onclick="mostrarMensaje('Recordatorios Montero', 'Recordatorio: Revisión anual pendiente para el Mitsubishi Montero Sport.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
                             📅 Recordatorios
                         </button>
-                        <button onclick="mostrarManual('manualMontero', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            📄 Ver Manual PDF
-                        </button>
                         <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview" target="_blank" rel="noopener noreferrer" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto text-center mb-2 md:mb-0">
                             Abrir PDF en Nueva Pestaña ↗️
                         </a>
@@ -149,9 +146,10 @@
                     </div>
                 </div>
 
-                <p id="galeriaMensajeMontero" class="text-sm text-gray-600 mt-3"></p> <div id="galeriaDisplayMontero" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+                <p id="galeriaMensajeMontero" class="text-sm text-gray-600 mt-3"></p> 
+                <div id="galeriaDisplayMontero" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
                 <iframe id="manualMontero" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
-                <p id="manualMonteroError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
+                <p id="manualMonteroError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual.</p>
             </article>
 
             <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
@@ -189,9 +187,6 @@
                         <button onclick="mostrarMensaje('Recordatorios Lancer', 'Recordatorio: Cambio de aceite en junio para el Mitsubishi Lancer.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
                             📅 Recordatorios
                         </button>
-                        <button onclick="mostrarManual('manualLancer', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            📄 Ver Manual PDF
-                        </button>
                         <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview" target="_blank" rel="noopener noreferrer" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto text-center mb-2 md:mb-0">
                             Abrir PDF en Nueva Pestaña ↗️
                         </a>
@@ -204,9 +199,10 @@
                     </div>
                 </div>
 
-                <p id="galeriaMensajeLancer" class="text-sm text-gray-600 mt-3"></p> <div id="galeriaDisplayLancer" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+                <p id="galeriaMensajeLancer" class="text-sm text-gray-600 mt-3"></p> 
+                <div id="galeriaDisplayLancer" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
                 <iframe id="manualLancer" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
-                <p id="manualLancerError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
+                <p id="manualLancerError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual.</p>
             </article>
         </main>
     </div>
@@ -323,7 +319,6 @@
                     imagesProcessedCount++;
                     if (imagesProcessedCount === totalFiles) {
                         regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
-                        // Podríamos querer indicar un error general aquí
                         actualizarMensajeGaleria(idGaleriaMensaje, galeriasData[sufijoVehiculo].length, totalFiles, true, sufijoVehiculo);
                     }
                 };
@@ -352,7 +347,6 @@
                     galeriaDisplay.appendChild(imgElement);
                 });
             }
-             // El mensaje se actualiza después de regenerar, reflejando el estado actual
             actualizarMensajeGaleria(idGaleriaMensaje, vehicleImages ? vehicleImages.length : 0, 0, false, sufijoVehiculo);
         }
 
@@ -364,8 +358,7 @@
                 mensajeTexto = `Error al cargar algunas imágenes. ${cargadas} válida(s) procesada(s).`;
             } else if (cargadas > 0) {
                 mensajeTexto = `${cargadas} imágen(es) en la galería.`;
-            } else { // No hay imágenes cargadas
-                // Verificamos si hay algo guardado para decidir el mensaje inicial
+            } else { 
                 const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
                 if (sufijoVehiculo && localStorage.getItem(localStorageKey)) {
                      mensajeTexto = 'Álbum cargado desde el almacenamiento local. Seleccione "Fotos" para añadir más.';
@@ -391,10 +384,7 @@
             const detallesTextarea = document.getElementById('detallesTextarea');
             detallesTextarea.value = imageData.details || "";
             detallesTextarea.oninput = function() {
-                // Guardar detalles en el objeto en memoria mientras se escribe
                 galeriasData[currentLightboxImageInfo.sufijo][currentLightboxImageInfo.index].details = this.value;
-                // Opcional: Si se quiere auto-guardar en localStorage cada vez que se edita un detalle
-                // guardarAlbumEnLocalStorage(currentLightboxImageInfo.sufijo, true); // true para modo silencioso
             };
             
             const modal = document.getElementById('imagenCompletaModal');
@@ -427,19 +417,15 @@
             const galeriaDisplayId = 'galeriaDisplay' + sufijo;
             const galeriaMensajeId = 'galeriaMensaje' + sufijo;
             regenerarGaleria(sufijo, galeriaDisplayId, galeriaMensajeId);
-            // Opcional: Guardar automáticamente en localStorage después de eliminar
-            // guardarAlbumEnLocalStorage(sufijo, true); 
             mostrarMensaje('Imagen Eliminada', `La imagen ha sido eliminada de la galería actual.`);
         }
         
-        // --- Funciones de LocalStorage ---
         function guardarAlbumEnLocalStorage(sufijoVehiculo, silencioso = false) {
             const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
             try {
                 const datosAGuardar = galeriasData[sufijoVehiculo] || [];
                 if (datosAGuardar.length === 0) {
                      if (!silencioso) mostrarMensaje('Guardar Álbum', `El álbum para ${sufijoVehiculo} está vacío. Nada que guardar.`);
-                     // Si está vacío y existe en localStorage, lo limpiamos para reflejar el estado vacío.
                      if (localStorage.getItem(localStorageKey)) {
                         localStorage.removeItem(localStorageKey);
                         if (!silencioso) mostrarMensaje('Guardar Álbum', `Álbum vacío para ${sufijoVehiculo}. Guardado local limpiado.`);
@@ -463,24 +449,25 @@
             if (datosGuardados) {
                 try {
                     galeriasData[sufijoVehiculo] = JSON.parse(datosGuardados);
-                    regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId);
-                    mostrarMensaje('Álbum Cargado', `Álbum de ${sufijoVehiculo} cargado desde el almacenamiento local.`);
-                    return true; // Indica que se cargó algo
+                    // No mostrar mensaje de "álbum cargado" aquí, se maneja en actualizarMensajeGaleria
                 } catch (e) {
                     console.error("Error al cargar desde localStorage:", e);
-                    localStorage.removeItem(localStorageKey); // Eliminar datos corruptos
-                    regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId); // Asegura que la galería se muestre vacía
-                    return false;
+                    localStorage.removeItem(localStorageKey); 
+                    galeriasData[sufijoVehiculo] = []; // Asegurar que esté vacío en memoria si hay error
                 }
+            } else {
+                 galeriasData[sufijoVehiculo] = []; // Asegurar que esté vacío si no hay nada en localStorage
             }
-            regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId); // Asegura mensaje inicial si no hay nada
-            return false; // No se cargó nada
+            // Siempre regenerar y actualizar mensaje, incluso si no se cargó nada (para mostrar mensaje inicial)
+            regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId);
+            // El mensaje de "álbum cargado" o "no hay imágenes" se establece en actualizarMensajeGaleria
         }
+
 
         function limpiarAlbumGuardado(sufijoVehiculo) {
             const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
             localStorage.removeItem(localStorageKey);
-            galeriasData[sufijoVehiculo] = []; // Limpiar también en memoria
+            galeriasData[sufijoVehiculo] = []; 
             
             const galeriaDisplayId = 'galeriaDisplay' + sufijoVehiculo;
             const galeriaMensajeId = 'galeriaMensaje' + sufijoVehiculo;
@@ -488,29 +475,33 @@
             mostrarMensaje('Almacenamiento Limpiado', `El álbum guardado para ${sufijoVehiculo} ha sido eliminado del navegador.`);
         }
 
-
-        // --- Fin Funciones de LocalStorage ---
-
-
         function mostrarManual(id, buttonElement) {
+            // Esta función ya no se usa si los botones "Ver Manual PDF" se eliminan.
+            // Se puede mantener por si se decide reintroducir la funcionalidad,
+            // o eliminarla si se considera que ya no es necesaria.
             const pdfIframe = document.getElementById(id);
             const pdfError = document.getElementById(id + 'Error');
-            document.querySelectorAll('iframe').forEach(iframe => {
-                if (iframe.id !== id) {
-                    iframe.style.height = '0px';
-                    iframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
+            // ... resto de la lógica original de mostrarManual ...
+            // Por ahora, la dejamos, ya que no causa problemas.
+             if (pdfIframe) { // Solo proceder si el iframe existe
+                document.querySelectorAll('iframe').forEach(iframe => {
+                    if (iframe.id !== id) {
+                        iframe.style.height = '0px';
+                        iframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
+                    }
+                });
+                if (activeButton && activeButton !== buttonElement) {
+                    activeButton.classList.remove('bg-red-700');
+                    activeButton.classList.add('bg-red-500');
                 }
-            });
-            if (activeButton && activeButton !== buttonElement) {
-                 activeButton.classList.remove('bg-red-700');
-                 activeButton.classList.add('bg-red-500');
-            }
-            if (pdfIframe) {
+
                 if (pdfIframe.style.height === '0px' || pdfIframe.style.height === '') {
                     pdfIframe.style.height = 'calc(100vh - 200px)';
                     if (window.innerWidth >= 768) { pdfIframe.style.height = '600px';}
                     pdfIframe.classList.add('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    buttonElement.classList.remove('bg-red-500'); buttonElement.classList.add('bg-red-700');
+                    if(buttonElement){ // Solo si el botón existe
+                        buttonElement.classList.remove('bg-red-500'); buttonElement.classList.add('bg-red-700');
+                    }
                     activeButton = buttonElement; visibleIframeId = id;
                     pdfIframe.onload = () => pdfError.classList.add('hidden');
                     pdfIframe.onerror = () => {
@@ -520,7 +511,9 @@
                 } else {
                     pdfIframe.style.height = '0px';
                     pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    buttonElement.classList.remove('bg-red-700'); buttonElement.classList.add('bg-red-500');
+                     if(buttonElement){ // Solo si el botón existe
+                        buttonElement.classList.remove('bg-red-700'); buttonElement.classList.add('bg-red-500');
+                     }
                     activeButton = null; visibleIframeId = null; pdfError.classList.add('hidden');
                 }
             }
@@ -568,7 +561,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Cargar álbumes guardados al iniciar
             cargarAlbumDesdeLocalStorage('Montero');
             cargarAlbumDesdeLocalStorage('Lancer');
         });

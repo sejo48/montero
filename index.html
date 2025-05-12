@@ -3,578 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha Técnica Vehículos de Jorge</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Ficha Técnica Profesional: Mitsubishi Montero Sport 1999</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* Estilo para la fuente Inter, si está disponible */
+        /* --- General Styles --- */
+        :root {
+            --primary-color: #003366; /* Mitsubishi Blue */
+            --secondary-color: #4a4a4a; /* Dark Gray for text */
+            --accent-color: #cc0000; /* Mitsubishi Red */
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --border-color: #dee2e6;
+            --white: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Inter', Arial, sans-serif;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 10px; /* Add padding top/bottom, less side padding */
+            background-color: var(--light-gray);
+            color: var(--secondary-color);
+            font-size: 16px;
         }
-        /* Estilos personalizados para el modal y transiciones */
-        .modal-overlay, #imagenCompletaModal {
-            transition: opacity 0.3s ease-in-out;
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            background-color: var(--white);
+            padding: 30px 35px; /* More padding inside */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            border: 1px solid var(--border-color);
         }
-        .modal-content, #imagenCompletaModal #imagenCompletaContenedor img, #imagenCompletaModal #imagenCompletaContenedor textarea {
-            transition: transform 0.3s ease-in-out;
+
+        /* --- Typography & Headings --- */
+        h1 {
+            font-family: 'Lato', sans-serif;
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 2.2em; /* Larger H1 */
+            font-weight: 700;
         }
-        /* Ocultar scrollbars en iframes y asegurar que no tengan borde */
-        iframe {
-            border: none; 
+
+        h2 {
+            font-family: 'Lato', sans-serif;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--medium-gray);
+            padding-bottom: 8px;
+            margin-top: 40px; /* More space between sections */
+            margin-bottom: 20px;
+            font-size: 1.6em; /* Larger H2 */
+            font-weight: 700;
+            display: flex; /* Align icon and text */
+            align-items: center;
         }
-        /* Estilo para las imágenes de la galería */
-        .gallery-image {
-            width: 100%;
-            height: 150px; /* Altura fija para las miniaturas */
-            object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
-            border-radius: 0.5rem; /* Esquinas redondeadas */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
-            cursor: pointer; /* Indica que es clickeable */
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+        .vin-info {
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 500; /* Medium weight */
+            margin-bottom: 30px;
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            display: inline-block; /* Fit content */
+            margin-left: auto;
+            margin-right: auto;
+            display: table; /* Center block element trick */
         }
-        .gallery-image:hover {
-            transform: scale(1.05);
+
+        /* --- Definition List Styling (dt/dd) --- */
+        dl {
+            margin-bottom: 25px;
+            overflow: hidden; /* Contains floats */
+        }
+
+        dt {
+            font-weight: 500; /* Medium weight */
+            color: #333; /* Slightly darker than body text */
+            float: left;
+            width: 250px; /* Adjusted width */
+            clear: left;
+            margin-bottom: 8px;
+            padding-right: 15px;
+            box-sizing: border-box;
+            position: relative; /* For potential future pseudo-elements */
+        }
+
+        dd {
+            margin-left: 260px; /* Slightly more than dt width */
+            margin-bottom: 8px;
+            padding-left: 10px;
+            color: var(--dark-gray); /* Subtler color for values */
+        }
+
+        /* --- Emoji Icons --- */
+        .emoji {
+            margin-right: 12px;
+            font-size: 1.2em; /* Slightly larger emoji */
+            vertical-align: middle;
+        }
+
+        /* --- PDF Section Specific Styles --- */
+        .pdf-section p {
+             text-align: center;
+             margin-bottom: 15px;
+             color: var(--dark-gray);
+        }
+        .pdf-section strong {
+            color: var(--secondary-color);
+        }
+
+        .pdf-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--accent-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500; /* Medium weight */
+            font-size: 1.05em;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .pdf-button:hover {
+            background-color: #a30000; /* Darker red on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        /* Estilos para el modal de imagen a pantalla completa */
-        #imagenCompletaSrc {
-            border-radius: 0.5rem; /* Esquinas redondeadas para la imagen grande */
-            box-shadow: 0 0 30px rgba(0,0,0,0.5); /* Sombra más pronunciada */
-        }
-        .lightbox-button {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 20px;
-            line-height: 36px;
+        .pdf-button-container {
             text-align: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 30px; /* Space below button */
         }
-        .lightbox-button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+
+        .iframe-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--light-gray); /* Subtle background for iframe area */
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
         }
-        #botonEliminarImagen.lightbox-button:hover {
-            background-color: rgba(220, 38, 38, 0.9); /* Rojo más opaco al pasar el cursor */
+
+        .iframe-pdf {
+            border: 1px solid var(--border-color);
+            width: 100%; /* Full width within its container */
+            max-width: 780px; /* Max width */
+            height: 650px; /* Adjusted height */
+            display: block; /* For margin auto to work */
+            margin: 0 auto; /* Center iframe */
+            background-color: var(--white); /* Ensure iframe bg is white if PDF fails */
         }
-        #detallesTextarea {
-            width: 100%;
-            min-height: 60px;
-            padding: 8px;
-            border: 1px solid #4A5568; /* gris oscuro */
-            border-radius: 0.375rem; /* esquinas redondeadas */
-            background-color: #2D3748; /* fondo gris más oscuro */
-            color: #E2E8F0; /* texto claro */
-            margin-top: 0.75rem; /* mt-3 */
-            font-size: 0.875rem; /* text-sm */
+
+        .iframe-fallback {
+            color: var(--dark-gray);
+            font-size: 0.9em;
         }
-        /* Transición para el contenedor de acciones colapsable */
-        .acciones-contenedor {
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            overflow: hidden;
-            max-height: 0; /* Inicialmente colapsado */
-            opacity: 0; /* Inicialmente transparente */
+        .iframe-fallback a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
         }
-        .acciones-contenedor.visible {
-            max-height: 800px; /* Altura suficiente para los botones, ajustar si es necesario */
-            opacity: 1;
+        .iframe-fallback a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+            color: var(--dark-gray);
+        }
+
+        /* --- Separator --- */
+        hr.section-separator {
+            margin: 40px 0;
+            border: 0;
+            border-top: 1px dashed var(--border-color); /* Dashed separator */
+        }
+
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 5px;
+            }
+            .container {
+                padding: 20px 25px;
+            }
+            h1 {
+                font-size: 1.9em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+            dt {
+                width: 200px; /* Slightly less width */
+            }
+            dd {
+                margin-left: 210px; /* Adjust accordingly */
+            }
+            .iframe-pdf {
+                height: 550px; /* Adjust height */
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.7em; }
+            h2 { font-size: 1.3em; }
+            .vin-info { font-size: 1em; padding: 6px; }
+
+            dt {
+                float: none;
+                width: auto;
+                padding-right: 0;
+                margin-bottom: 4px; /* Less space before dd */
+                font-weight: 700; /* Bolder dt on mobile */
+                color: var(--primary-color); /* Make dt stand out more */
+            }
+            dd {
+                margin-left: 0;
+                padding-left: 10px; /* Indent description */
+                margin-bottom: 12px; /* More space between pairs */
+                 border-left: 2px solid var(--medium-gray); /* Visual indent */
+            }
+            .iframe-pdf {
+                height: 450px;
+            }
+            .container {
+                padding: 15px 20px;
+            }
+            .pdf-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 p-4 md:p-8">
+<body>
+    <div class="container">
+        <h1><span class="emoji">🚙</span>Ficha Técnica: Mitsubishi Montero Sport</h1>
+        <div class="vin-info">Año: 1999 | VIN: JA4LS31P4WP018774</div>
 
-    <div class="max-w-5xl mx-auto">
+        <h2><span class="emoji">🔧</span> Especificaciones Técnicas</h2>
+        <dl>
+            <dt>Motor:</dt>
+            <dd>6G72 – V6, 3.0 litros, SOHC, 12 válvulas</dd>
+            <dt>Potencia (aprox.):</dt>
+            <dd>173 hp</dd>
+            <dt>Transmisión:</dt>
+            <dd>Automática R4AW3 (4 velocidades)</dd>
+            <dt>Tracción:</dt>
+            <dd>4x2 o 4x4 (según configuración)</dd>
+            <dt>Eje trasero:</dt>
+            <dd>R5ED</dd>
+            <dt>Código de modelo:</dt>
+            <dd>K86WGRXEL7M</dd>
+            <dt>Tipo de dirección:</dt>
+            <dd>Hidráulica Asistida</dd>
+            <dt>Sistema de frenos:</dt>
+            <dd>Discos ventilados (delanteros), Tambor (traseros)</dd>
+            <dt>Sistema de encendido:</dt>
+            <dd>Distribuidor con bobina interna</dd>
+        </dl>
 
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-sky-700 bg-sky-100 p-4 rounded-lg shadow-md">Ficha Técnica - Vehículos de Jorge</h1>
-        </header>
+        <h2><span class="emoji">🛞</span> Neumáticos y Suspensión</h2>
+        <dl>
+            <dt>Tamaño Neumáticos:</dt>
+            <dd>265/70 R15 110S</dd>
+            <dt>Presión Recomendada:</dt>
+            <dd>26 PSI (del./tras. - carga normal/máx.)</dd>
+            <dt>Suspensión Delantera:</dt>
+            <dd>Independiente, Doble Horquilla con Barra de Torsión</dd>
+            <dt>Suspensión Trasera:</dt>
+            <dd>Eje Rígido con Muelles (Resortes de Hoja)</dd>
+        </dl>
 
-        <main class="space-y-8">
+        <h2><span class="emoji">⚖️</span> Pesos y Capacidades</h2>
+        <dl>
+            <dt>Peso Bruto Vehicular (GVWR):</dt>
+            <dd>5,005 lbs (2,268 kg)</dd>
+            <dt>Peso Máx. Eje Delantero:</dt>
+            <dd>2,545 lbs (1,154 kg)</dd>
+            <dt>Peso Máx. Eje Trasero:</dt>
+            <dd>2,665 lbs (1,209 kg)</dd>
+            <dt>Capacidad Tanque Combustible:</dt>
+            <dd>~ 74 litros (19.5 galones)</dd>
+            <dt>Capacidad Remolque (estimada):</dt>
+            <dd>2,000 – 5,000 lbs (907 – 2,268 kg)*</dd>
+            <dt class="note">*Nota Remolque:</dt>
+            <dd class="note">Depende de configuración y uso de frenos de remolque.</dd>
+        </dl>
 
-            <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                <h2 class="text-2xl font-semibold text-sky-600 mb-4 border-b-2 border-sky-200 pb-2">Mitsubishi Montero Sport 1999</h2>
-                <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
-                    <div><p><strong>Motor:</strong> 6G72 (3.0L V6 SOHC 24 válvulas)</p></div>
-                    <div><p><strong>Potencia:</strong> 173 hp @ 5,000 rpm</p></div>
-                    <div><p><strong>Torque:</strong> 228 lb-ft @ 3,500 rpm</p></div>
-                    <div><p><strong>Transmisión:</strong> Automática R4AW3</p></div>
-                    <div><p><strong>Tracción:</strong> 4x2 (trasera)</p></div>
-                    <div><p><strong>Neumáticos:</strong> 265/70R15 110S</p></div>
-                    <div><p><strong>Presión:</strong> 26 PSI</p></div>
-                    <div><p><strong>Peso bruto:</strong> 2.268 kg (5005 lbs)</p></div>
-                    <div><p><strong>VIN:</strong> JA4LS31P4WP018774</p></div>
-                    <div><p><strong>Color exterior:</strong> 4636</p></div>
-                    <div><p><strong>Color interior:</strong> P85S74</p></div>
-                </div>
-                
-                <div class="mt-4">
-                    <button 
-                        id="toggleBotonMontero"
-                        onclick="toggleAcciones('Montero')" 
-                        class="md:hidden bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md w-full text-left mb-3 transition-all duration-300 ease-in-out flex justify-between items-center"
-                        aria-expanded="false"
-                        aria-controls="accionesContenedorMontero">
-                        <span id="toggleTextoMontero">Acciones del Vehículo</span>
-                        <span id="iconoToggleMontero" class="transform transition-transform duration-300">☰</span>
-                    </button>
-                    <div id="accionesContenedorMontero" class="acciones-contenedor md:flex md:flex-row md:flex-wrap md:gap-3 md:justify-start md:max-h-none md:opacity-100 md:overflow-visible">
-                        <button onclick="abrirInputGaleria('Montero')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            📷 Fotos
-                        </button>
-                        <input type="file" id="galeriaInputMontero" multiple accept="image/*" class="hidden" onchange="mostrarImagenesSeleccionadas(event, 'galeriaDisplayMontero', 'galeriaMensajeMontero', 'Montero')">
-                        
-                        <button onclick="mostrarMensaje('Mantenimiento Montero', 'Próximamente: Historial de mantenimientos del Mitsubishi Montero Sport.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            🛠 Mantenimiento
-                        </button>
-                        <button onclick="mostrarMensaje('Recordatorios Montero', 'Recordatorio: Revisión anual pendiente para el Mitsubishi Montero Sport.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            📅 Recordatorios
-                        </button>
-                        <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview" target="_blank" rel="noopener noreferrer" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto text-center mb-2 md:mb-0">
-                            Abrir PDF en Nueva Pestaña ↗️
-                        </a>
-                        <button onclick="guardarAlbumEnLocalStorage('Montero')" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            💾 Guardar Álbum
-                        </button>
-                        <button onclick="limpiarAlbumGuardado('Montero')" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto">
-                            🗑️ Limpiar Guardado
-                        </button>
-                    </div>
-                </div>
+        <h2><span class="emoji">🎨</span> Identificación y Opciones</h2>
+        <dl>
+            <dt>Color Exterior (Código):</dt>
+            <dd>4636 (Generalmente Plata Metálico / Gris)</dd>
+            <dt>Color Interior (Código):</dt>
+            <dd>P85S74</dd>
+            <dt>Código de Opción:</dt>
+            <dd>53C A13</dd>
+            <dt>Etiqueta Presión Llantas:</dt>
+            <dd>Código MP319544 A</dd>
+        </dl>
 
-                <p id="galeriaMensajeMontero" class="text-sm text-gray-600 mt-3"></p> 
-                <div id="galeriaDisplayMontero" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-                <iframe id="manualMontero" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
-                <p id="manualMonteroError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual.</p>
-            </article>
+        <h2><span class="emoji">📆</span> Fabricación</h2>
+        <dl>
+            <dt>País de Origen:</dt>
+            <dd>Japón</dd>
+            <dt>Fecha de Fabricación:</dt>
+            <dd>Septiembre de 1997</dd>
+            <dt>Clasificación Vehicular:</dt>
+            <dd>MPV (Vehículo Multipropósito)</dd>
+        </dl>
 
-            <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                <h2 class="text-2xl font-semibold text-sky-600 mb-4 border-b-2 border-sky-200 pb-2">Mitsubishi Lancer 2000</h2>
-                <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
-                    <div><p><strong>Modelo:</strong> CK4ASNJEL</p></div>
-                    <div><p><strong>Motor:</strong> 4G92 (1.6L DOHC 16V)</p></div>
-                    <div><p><strong>Potencia:</strong> 113 hp @ 6,000 rpm</p></div>
-                    <div><p><strong>Torque:</strong> 137 Nm @ 4,500 rpm</p></div>
-                    <div><p><strong>Transmisión:</strong> Manual F5M41</p></div>
-                    <div><p><strong>Color exterior:</strong> G13D</p></div>
-                    <div><p><strong>Color interior:</strong> G13</p></div>
-                    <div><p><strong>Opciones:</strong> 83A H94</p></div>
-                </div>
+        <!-- SECCIÓN DE DOCUMENTACIÓN PDF -->
+        <hr class="section-separator">
+        <h2 id="documentacion"><span class="emoji">📄</span> Documentación Adicional</h2>
 
-                <div class="mt-4">
-                    <button 
-                        id="toggleBotonLancer"
-                        onclick="toggleAcciones('Lancer')" 
-                        class="md:hidden bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md w-full text-left mb-3 transition-all duration-300 ease-in-out flex justify-between items-center"
-                        aria-expanded="false"
-                        aria-controls="accionesContenedorLancer">
-                        <span id="toggleTextoLancer">Acciones del Vehículo</span>
-                        <span id="iconoToggleLancer" class="transform transition-transform duration-300">☰</span>
-                    </button>
-                    <div id="accionesContenedorLancer" class="acciones-contenedor md:flex md:flex-row md:flex-wrap md:gap-3 md:justify-start md:max-h-none md:opacity-100 md:overflow-visible">
-                        <button onclick="abrirInputGaleria('Lancer')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            📷 Fotos
-                        </button>
-                        <input type="file" id="galeriaInputLancer" multiple accept="image/*" class="hidden" onchange="mostrarImagenesSeleccionadas(event, 'galeriaDisplayLancer', 'galeriaMensajeLancer', 'Lancer')">
-                        
-                        <button onclick="mostrarMensaje('Mantenimiento Lancer', 'Próximamente: Historial de mantenimientos del Mitsubishi Lancer.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            🛠 Mantenimiento
-                        </button>
-                        <button onclick="mostrarMensaje('Recordatorios Lancer', 'Recordatorio: Cambio de aceite en junio para el Mitsubishi Lancer.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            📅 Recordatorios
-                        </button>
-                        <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview" target="_blank" rel="noopener noreferrer" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto text-center mb-2 md:mb-0">
-                            Abrir PDF en Nueva Pestaña ↗️
-                        </a>
-                        <button onclick="guardarAlbumEnLocalStorage('Lancer')" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
-                            💾 Guardar Álbum
-                        </button>
-                        <button onclick="limpiarAlbumGuardado('Lancer')" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto">
-                            🗑️ Limpiar Guardado
-                        </button>
-                    </div>
-                </div>
+        <div class="pdf-section">
+            <p>Accede al manual u otra información relevante del vehículo.</p>
 
-                <p id="galeriaMensajeLancer" class="text-sm text-gray-600 mt-3"></p> 
-                <div id="galeriaDisplayLancer" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-                <iframe id="manualLancer" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
-                <p id="manualLancerError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual.</p>
-            </article>
-        </main>
-    </div>
-
-    <div id="mensajeModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50 opacity-0">
-        <div class="modal-content bg-white p-6 rounded-lg shadow-xl max-w-sm w-full transform scale-95">
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="mensajeModalTitulo" class="text-xl font-semibold text-sky-700">Mensaje</h3>
-                <button onclick="cerrarMensaje()" class="text-gray-500 hover:text-gray-700 text-2xl" aria-label="Cerrar mensaje">&times;</button>
+            <!-- Opción 1: Botón de Enlace Directo -->
+            <p><strong>Opción 1: Ver / Descargar PDF</strong> (Recomendado)</p>
+            <div class="pdf-button-container">
+                 <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="pdf-button">
+                    Abrir Documento PDF
+                </a>
             </div>
-            <p id="mensajeModalContenido" class="text-gray-700"></p>
-            <div class="mt-6 text-right">
-                <button onclick="cerrarMensaje()" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow hover:shadow-md transition-all duration-200">
-                    Cerrar
-                </button>
+
+            <!-- Opción 2: Incrustado con iframe -->
+             <p style="margin-top: 30px;"><strong>Opción 2: Visualizador Integrado</strong></p>
+             <p style="font-size: 0.9em; margin-bottom: 20px;">(La visualización puede depender de la configuración de su navegador y Google Drive)</p>
+            <div class="iframe-container">
+                <iframe
+                    class="iframe-pdf"
+                    src="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview?usp=sharing"
+                    title="Visor de PDF Incorporado - Manual Montero Sport"
+                    allow="fullscreen">
+                    <p class="iframe-fallback">
+                        Su navegador no soporta la visualización de PDFs incrustados directamente.
+                        Por favor, use el botón de arriba o <a href="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/view?usp=sharing" target="_blank" rel="noopener noreferrer">haga clic aquí para abrir el PDF</a>.
+                    </p>
+                </iframe>
             </div>
         </div>
+        <!-- FIN SECCIÓN DE DOCUMENTACIÓN PDF -->
+
+        <footer>
+            Ficha técnica generada para Mitsubishi Montero Sport 1999 (Modelo K86W). <br>
+            La disponibilidad y visualización del PDF dependen de los permisos de Google Drive.
+        </footer>
     </div>
-
-    <div id="imagenCompletaModal" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center p-4 hidden z-[60] opacity-0" role="dialog" aria-modal="true" aria-labelledby="imagenCompletaTituloModal">
-        <div class="absolute top-3 right-3 md:top-4 md:right-4 flex items-center space-x-3 z-10">
-            <button id="botonEliminarImagen" onclick="eliminarImagenActualDesdeLightbox()" title="Eliminar imagen" aria-label="Eliminar imagen" class="lightbox-button">
-                🗑️
-            </button>
-            <button id="botonCerrarLightbox" onclick="cerrarImagenCompleta()" class="lightbox-button" aria-label="Cerrar imagen">
-                &times;
-            </button>
-        </div>
-        
-        <div id="imagenCompletaContenedor" class="relative w-full max-w-3xl max-h-[90vh] flex flex-col items-center">
-            <img id="imagenCompletaSrc" src="" alt="Imagen a pantalla completa" class="max-w-[95vw] max-h-[70vh] object-contain mb-3">
-            <div class="w-full px-2">
-                <p id="imagenCompletaNombre" class="text-white text-center text-sm md:text-base mb-1"></p>
-                <textarea id="detallesTextarea" placeholder="Añade detalles aquí..." aria-label="Detalles de la imagen"></textarea>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let visibleIframeId = null;
-        let activeButton = null;
-        let galeriasData = { Montero: [], Lancer: [] };
-        let currentLightboxImageInfo = { sufijo: null, index: null };
-
-        const LOCAL_STORAGE_KEY_PREFIX = 'albumVehiculo_';
-
-        function toggleAcciones(sufijoVehiculo) {
-            const contenedorAcciones = document.getElementById('accionesContenedor' + sufijoVehiculo);
-            const botonToggle = document.getElementById('toggleBoton' + sufijoVehiculo);
-            const iconoToggle = document.getElementById('iconoToggle' + sufijoVehiculo);
-            const textoBoton = document.getElementById('toggleTexto' + sufijoVehiculo);
-            const isExpanded = botonToggle.getAttribute('aria-expanded') === 'true';
-
-            if (isExpanded) {
-                contenedorAcciones.classList.remove('visible');
-                botonToggle.setAttribute('aria-expanded', 'false');
-                if (iconoToggle) iconoToggle.innerHTML = '☰'; 
-                if (textoBoton) textoBoton.textContent = 'Acciones del Vehículo';
-                if (iconoToggle) iconoToggle.classList.remove('rotate-180');
-            } else {
-                contenedorAcciones.classList.add('visible');
-                botonToggle.setAttribute('aria-expanded', 'true');
-                if (iconoToggle) iconoToggle.innerHTML = '&times;'; 
-                if (textoBoton) textoBoton.textContent = 'Ocultar Acciones';
-                if (iconoToggle) iconoToggle.classList.add('rotate-180');
-            }
-        }
-
-        function abrirInputGaleria(sufijoVehiculo) {
-            document.getElementById('galeriaInput' + sufijoVehiculo).click();
-        }
-
-        function mostrarImagenesSeleccionadas(event, idGaleriaDisplay, idGaleriaMensaje, sufijoVehiculo) {
-            const files = event.target.files;
-
-            // Asegurar que el array de datos para la galería exista. NO reiniciar si ya tiene datos.
-            if (!galeriasData[sufijoVehiculo]) {
-                galeriasData[sufijoVehiculo] = [];
-            }
-            // No limpiar galeriasData[sufijoVehiculo] aquí para permitir añadir imágenes.
-
-            // Limpiar la visualización de la galería (HTML) para redibujar todo (antiguas + nuevas).
-            // regenerarGaleria se encargará de esto.
-
-            if (!files || files.length === 0) {
-                // Si no se seleccionan nuevos archivos, no es necesario hacer mucho,
-                // la galería ya muestra el estado actual.
-                // Solo limpiar el valor del input.
-                event.target.value = null;
-                return;
-            }
-
-            let imagesProcessedCount = 0;
-            const totalFiles = files.length;
-            let filesSuccessfullyRead = 0;
-
-            Array.from(files).forEach((file) => {
-                if (!file.type.startsWith('image/')) {
-                    console.warn(`El archivo "${file.name}" no es una imagen y será omitido.`);
-                    imagesProcessedCount++;
-                    if (imagesProcessedCount === totalFiles) {
-                        regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
-                        if (filesSuccessfullyRead === 0 && totalFiles > 0) {
-                            mostrarMensaje('Archivos no válidos', 'Ninguno de los archivos seleccionados era una imagen válida y no se añadieron a la galería.');
-                        }
-                    }
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const imageData = {
-                        src: e.target.result,
-                        name: file.name,
-                        type: file.type,
-                        details: "" 
-                    };
-                    galeriasData[sufijoVehiculo].push(imageData); // Añadir la nueva imagen al array existente
-                    filesSuccessfullyRead++;
-                    imagesProcessedCount++;
-                    if (imagesProcessedCount === totalFiles) {
-                        regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
-                         if (filesSuccessfullyRead > 0) {
-                            mostrarMensaje('Imágenes Añadidas', `${filesSuccessfullyRead} nueva(s) imágen(es) añadida(s) a la galería de ${sufijoVehiculo}.`);
-                        } else if (totalFiles > 0) { // Si se procesaron archivos pero ninguno fue válido
-                             mostrarMensaje('Archivos no válidos', 'Ninguno de los archivos seleccionados era una imagen válida y no se añadieron a la galería.');
-                        }
-                    }
-                };
-                reader.onerror = () => {
-                    console.error(`Error al leer el archivo ${file.name}.`);
-                    imagesProcessedCount++;
-                    if (imagesProcessedCount === totalFiles) {
-                        regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
-                        mostrarMensaje('Error de Carga', 'Algunas imágenes no pudieron ser procesadas.');
-                    }
-                };
-                reader.readAsDataURL(file);
-            });
-            event.target.value = null; // Limpiar el input para permitir seleccionar los mismos archivos de nuevo
-        }
-        
-        function regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje) {
-            const galeriaDisplay = document.getElementById(idGaleriaDisplay);
-            galeriaDisplay.innerHTML = ''; // Limpiar galería existente en la UI
-
-            const vehicleImages = galeriasData[sufijoVehiculo];
-            if (!vehicleImages || vehicleImages.length === 0) {
-                galeriaDisplay.classList.add('hidden'); 
-            } else {
-                galeriaDisplay.classList.remove('hidden'); 
-                vehicleImages.forEach((imageData, index) => {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = imageData.src;
-                    imgElement.alt = `Miniatura de ${imageData.name}`;
-                    imgElement.classList.add('gallery-image');
-                    imgElement.dataset.sufijo = sufijoVehiculo;
-                    imgElement.dataset.index = index;
-                    imgElement.onclick = () => mostrarImagenCompleta(sufijoVehiculo, index);
-                    galeriaDisplay.appendChild(imgElement);
-                });
-            }
-            actualizarMensajeGaleria(idGaleriaMensaje, vehicleImages ? vehicleImages.length : 0, 0, false, sufijoVehiculo);
-        }
-
-        function actualizarMensajeGaleria(idGaleriaMensaje, cargadas, totalIntentosOriginales = 0, errorGeneral = false, sufijoVehiculo = null) {
-            const mensajeEl = document.getElementById(idGaleriaMensaje);
-            let mensajeTexto = '';
-
-            if (errorGeneral) { 
-                mensajeTexto = `Error al cargar algunas imágenes. ${cargadas} válida(s) procesada(s).`;
-            } else if (cargadas > 0) {
-                mensajeTexto = `${cargadas} imágen(es) en la galería.`;
-            } else { 
-                const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
-                if (sufijoVehiculo && localStorage.getItem(localStorageKey)) { // Si hay algo guardado y se limpió la sesión actual
-                     mensajeTexto = 'Álbum cargado desde el almacenamiento local. Seleccione "Fotos" para añadir más.';
-                } else { // No hay nada en la sesión actual ni guardado
-                    mensajeTexto = 'No hay imágenes. Seleccione "Fotos" para añadir.';
-                }
-            }
-            
-            mensajeEl.textContent = mensajeTexto;
-            mensajeEl.classList.remove('hidden');
-        }
-
-        function mostrarImagenCompleta(sufijoVehiculo, index) {
-            const imageData = galeriasData[sufijoVehiculo][index];
-            if (!imageData) return;
-
-            currentLightboxImageInfo = { sufijo: sufijoVehiculo, index: index };
-
-            document.getElementById('imagenCompletaSrc').src = imageData.src;
-            document.getElementById('imagenCompletaSrc').alt = `Imagen: ${imageData.name}`;
-            document.getElementById('imagenCompletaNombre').textContent = `Nombre: ${imageData.name}`;
-            
-            const detallesTextarea = document.getElementById('detallesTextarea');
-            detallesTextarea.value = imageData.details || "";
-            detallesTextarea.oninput = function() {
-                galeriasData[currentLightboxImageInfo.sufijo][currentLightboxImageInfo.index].details = this.value;
-            };
-            
-            const modal = document.getElementById('imagenCompletaModal');
-            modal.classList.remove('hidden');
-            void modal.offsetWidth; 
-            modal.classList.remove('opacity-0');
-            modal.classList.add('opacity-100');
-        }
-
-        function cerrarImagenCompleta() {
-            const modal = document.getElementById('imagenCompletaModal');
-            modal.classList.remove('opacity-100');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.getElementById('imagenCompletaSrc').src = ""; 
-                document.getElementById('detallesTextarea').value = "";
-                currentLightboxImageInfo = { sufijo: null, index: null }; 
-            }, 300);
-        }
-
-        function eliminarImagenActualDesdeLightbox() {
-            if (currentLightboxImageInfo.sufijo === null || currentLightboxImageInfo.index === null) return;
-
-            const { sufijo, index } = currentLightboxImageInfo;
-            galeriasData[sufijo].splice(index, 1); 
-            
-            cerrarImagenCompleta(); 
-
-            const galeriaDisplayId = 'galeriaDisplay' + sufijo;
-            const galeriaMensajeId = 'galeriaMensaje' + sufijo;
-            regenerarGaleria(sufijo, galeriaDisplayId, galeriaMensajeId);
-            mostrarMensaje('Imagen Eliminada', `La imagen ha sido eliminada de la galería actual.`);
-        }
-        
-        function guardarAlbumEnLocalStorage(sufijoVehiculo, silencioso = false) {
-            const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
-            try {
-                const datosAGuardar = galeriasData[sufijoVehiculo] || [];
-                if (datosAGuardar.length === 0) {
-                     if (!silencioso) mostrarMensaje('Guardar Álbum', `El álbum para ${sufijoVehiculo} está vacío. Nada que guardar.`);
-                     if (localStorage.getItem(localStorageKey)) {
-                        localStorage.removeItem(localStorageKey);
-                        if (!silencioso) mostrarMensaje('Guardar Álbum', `Álbum vacío para ${sufijoVehiculo}. Guardado local limpiado.`);
-                     }
-                    return;
-                }
-                localStorage.setItem(localStorageKey, JSON.stringify(datosAGuardar));
-                if (!silencioso) mostrarMensaje('Álbum Guardado', `El álbum de ${sufijoVehiculo} ha sido guardado en el navegador.`);
-            } catch (e) {
-                console.error("Error al guardar en localStorage:", e);
-                if (!silencioso) mostrarMensaje('Error al Guardar', 'No se pudo guardar el álbum. Posiblemente el almacenamiento está lleno.');
-            }
-        }
-
-        function cargarAlbumDesdeLocalStorage(sufijoVehiculo) {
-            const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
-            const datosGuardados = localStorage.getItem(localStorageKey);
-            const galeriaDisplayId = 'galeriaDisplay' + sufijoVehiculo;
-            const galeriaMensajeId = 'galeriaMensaje' + sufijoVehiculo;
-
-            if (datosGuardados) {
-                try {
-                    galeriasData[sufijoVehiculo] = JSON.parse(datosGuardados);
-                } catch (e) {
-                    console.error("Error al cargar desde localStorage:", e);
-                    localStorage.removeItem(localStorageKey); 
-                    galeriasData[sufijoVehiculo] = []; 
-                }
-            } else {
-                 galeriasData[sufijoVehiculo] = []; 
-            }
-            regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId);
-        }
-
-
-        function limpiarAlbumGuardado(sufijoVehiculo) {
-            const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
-            localStorage.removeItem(localStorageKey);
-            galeriasData[sufijoVehiculo] = []; 
-            
-            const galeriaDisplayId = 'galeriaDisplay' + sufijoVehiculo;
-            const galeriaMensajeId = 'galeriaMensaje' + sufijoVehiculo;
-            regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId);
-            mostrarMensaje('Almacenamiento Limpiado', `El álbum guardado para ${sufijoVehiculo} ha sido eliminado del navegador.`);
-        }
-
-        function mostrarManual(id, buttonElement) {
-            const pdfIframe = document.getElementById(id);
-            const pdfError = document.getElementById(id + 'Error');
-             if (pdfIframe) { 
-                document.querySelectorAll('iframe').forEach(iframe => {
-                    if (iframe.id !== id) {
-                        iframe.style.height = '0px';
-                        iframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    }
-                });
-                if (activeButton && activeButton !== buttonElement) {
-                    activeButton.classList.remove('bg-red-700');
-                    activeButton.classList.add('bg-red-500');
-                }
-
-                if (pdfIframe.style.height === '0px' || pdfIframe.style.height === '') {
-                    pdfIframe.style.height = 'calc(100vh - 200px)';
-                    if (window.innerWidth >= 768) { pdfIframe.style.height = '600px';}
-                    pdfIframe.classList.add('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    if(buttonElement){ 
-                        buttonElement.classList.remove('bg-red-500'); buttonElement.classList.add('bg-red-700');
-                    }
-                    activeButton = buttonElement; visibleIframeId = id;
-                    pdfIframe.onload = () => pdfError.classList.add('hidden');
-                    pdfIframe.onerror = () => {
-                        pdfError.classList.remove('hidden'); pdfIframe.style.height = '0px';
-                        pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    };
-                } else {
-                    pdfIframe.style.height = '0px';
-                    pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                     if(buttonElement){ 
-                        buttonElement.classList.remove('bg-red-700'); buttonElement.classList.add('bg-red-500');
-                     }
-                    activeButton = null; visibleIframeId = null; pdfError.classList.add('hidden');
-                }
-            }
-        }
-        
-        window.addEventListener('resize', () => {
-            if (visibleIframeId) {
-                const pdfIframe = document.getElementById(visibleIframeId);
-                if (pdfIframe && (pdfIframe.style.height !== '0px' && pdfIframe.style.height !== '')) {
-                     pdfIframe.style.height = 'calc(100vh - 200px)';
-                    if (window.innerWidth >= 768) { pdfIframe.style.height = '600px'; }
-                }
-            }
-        });
-
-        function mostrarMensaje(titulo, contenido) {
-            document.getElementById('mensajeModalTitulo').textContent = titulo;
-            document.getElementById('mensajeModalContenido').textContent = contenido;
-            const modal = document.getElementById('mensajeModal');
-            modal.classList.remove('hidden'); void modal.offsetWidth; 
-            modal.classList.remove('opacity-0'); modal.classList.add('opacity-100');
-            modal.querySelector('.modal-content').classList.remove('scale-95');
-            modal.querySelector('.modal-content').classList.add('scale-100');
-        }
-
-        function cerrarMensaje() {
-            const modal = document.getElementById('mensajeModal');
-            modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
-            modal.querySelector('.modal-content').classList.remove('scale-100');
-            modal.querySelector('.modal-content').classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300);
-        }
-
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                const imagenModal = document.getElementById('imagenCompletaModal');
-                if (!imagenModal.classList.contains('hidden')) {
-                    cerrarImagenCompleta(); return;
-                }
-                const mensajeModal = document.getElementById('mensajeModal');
-                 if (!mensajeModal.classList.contains('hidden')) {
-                    cerrarMensaje();
-                }
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarAlbumDesdeLocalStorage('Montero');
-            cargarAlbumDesdeLocalStorage('Lancer');
-        });
-
-    </script>
 </body>
 </html>

@@ -167,55 +167,57 @@
 
         /* --- Estilos para Modales --- */
         .modal {
-            display: none; position: fixed; z-index: 1000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            overflow: auto; background-color: rgba(0,0,0,0.7); /* Fondo un poco más oscuro */
-            padding-top: 20px; /* Reducido para más espacio vertical */
-            padding-bottom: 20px;
+            display: none; /* Asegurar que esté oculto por defecto */
+            position: fixed; 
+            z-index: 1000;
+            left: 0; top: 0; 
+            width: 100%; height: 100%;
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.7); 
+            padding: 20px; /* Espacio para que el contenido no toque los bordes */
             box-sizing: border-box;
-            /* Usar flex para centrar el .modal-content directamente si solo hay un hijo principal en el modal */
-            /* Si el modal tiene múltiples hijos directos (como el botón de cierre fuera del .modal-content), 
-               el centrado se hace en .modal-content */
+            align-items: center; /* Para centrar verticalmente el contenido del modal */
+            justify-content: center; /* Para centrar horizontalmente el contenido del modal */
         }
-        .modal-content { /* Contenedor del contenido del modal (imagen + detalles en fullscreen) */
-            background-color: #fefefe; /* Color de fondo para el modal de configuración */
-            margin: auto; padding: 20px;
-            border: 1px solid #888; width: 85%; 
+        
+        /* Contenido del modal de configuración */
+        #config-fotos-modal .modal-content {
+            background-color: #fefefe; 
+            margin: auto; /* Necesario si el modal padre no es flex */
+            padding: 20px;
+            border: 1px solid #888; 
+            width: 85%; 
             max-width: 750px; 
-            border-radius: 8px; position: relative;
+            border-radius: 8px; 
+            position: relative; /* Para el botón de cierre absoluto */
             box-sizing: border-box;
         }
         
-        /* Estilos específicos para el modal de imagen fullscreen */
-        #fullscreen-image-modal {
-             padding: 10px; /* Espacio alrededor del contenido del modal fullscreen */
-             display: flex; /* Para centrar el .fullscreen-modal-content */
-             align-items: center;
-             justify-content: center;
-        }
-
-        #fullscreen-image-modal .fullscreen-modal-content { /* Nuevo contenedor interno para imagen y detalles */
-            background-color: transparent; /* El fondo lo da el overlay del modal */
+        /* Contenido del modal de imagen fullscreen */
+        #fullscreen-image-modal .fullscreen-modal-content { 
+            background-color: transparent; 
             padding:0;
-            width: auto; /* Se ajustará al contenido */
-            max-width: 95vw; /* Máximo ancho viewport */
-            height: auto; /* Se ajustará al contenido */
-            max-height: 95vh; /* Máximo alto viewport */
+            width: auto; /* Ajustar al contenido */
+            max-width: 90vw; /* Máximo ancho viewport para la imagen y detalles */
+            height: auto; /* Ajustar al contenido */
+            max-height: 90vh; /* Máximo alto viewport para la imagen y detalles */
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center;
-            border: none; /* Sin borde para este contenedor interno */
-            box-shadow: none; /* Sin sombra para este contenedor interno */
+            border: none; 
+            box-shadow: none; 
+            position: relative; /* Para el botón de cierre */
         }
 
         #fullscreen-image { /* La imagen en pantalla completa */
-            max-width: 100%; /* Máximo ancho dentro de .fullscreen-modal-content */
-            max-height: 80vh; /* Dejar espacio para detalles, ajustado */
+            max-width: 100%; /* Ocupa el ancho disponible en .fullscreen-modal-content */
+            max-height: calc(90vh - 60px); /* Deja espacio para detalles y padding del modal */
+            object-fit: contain; /* Muestra la imagen completa sin recortes */
             display: block; 
             border-radius: 4px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.7); /* Sombra más pronunciada para la imagen */
-            margin-bottom: 10px; /* Espacio entre imagen y detalles */
+            box-shadow: 0 0 25px rgba(0,0,0,0.7); 
+            margin-bottom: 10px; 
         }
         #fullscreen-details { /* Los detalles de la imagen en pantalla completa */
             color: #fff; 
@@ -225,28 +227,35 @@
             border-radius: 4px;
             max-width: 80%; /* Ancho máximo para los detalles */
             font-size: 0.9em;
-            overflow-y: auto; /* Scroll si el texto es muy largo */
-            max-height: 15vh; /* Altura máxima para los detalles */
+            overflow-y: auto; 
+            max-height: 10vh; /* Altura máxima para los detalles, ajustado */
+            word-wrap: break-word; /* Para que el texto largo se ajuste */
         }
-        #fullscreen-image-modal .modal-close-btn { /* Botón de cierre para el modal fullscreen */
-            position: absolute; 
-            top: 15px; 
-            right: 25px; /* Ajustado para mejor acceso */
-            color: #f1f1f1; 
-            font-size: 35px; /* Ligeramente más pequeño */
+        
+        /* Botón de cierre para todos los modales */
+        .modal-close-btn {
+            position: absolute; /* Posicionado relativo al .modal-content o .fullscreen-modal-content */
+            top: 10px;
+            right: 15px;
+            color: #aaa; 
+            font-size: 30px; 
             font-weight: bold;
-            transition: 0.3s;
-            z-index: 1001; /* Asegurar que esté sobre el contenido */
+            cursor: pointer;
+            z-index: 1002; /* Asegurar que esté sobre otros elementos del modal */
+        }
+        #fullscreen-image-modal .modal-close-btn { /* Estilo específico si es necesario para el de fullscreen */
+             color: #f1f1f1;
+        }
+        .modal-close-btn:hover, .modal-close-btn:focus {
+            color: black; 
+            text-decoration: none;
         }
          #fullscreen-image-modal .modal-close-btn:hover {
             color: #bbb;
          }
 
 
-        /* Modal de Configuración de Fotos (sin cambios significativos de la versión anterior) */
-        #config-fotos-modal .modal-content { /* Estilo base para modal-content ya definido */
-             /* Se pueden añadir ajustes específicos si es necesario, pero hereda los generales */
-        }
+        /* Modal de Configuración de Fotos (Galería interna y controles) */
         #config-fotos-gallery {
             display: flex; flex-wrap: wrap; gap: 15px; 
             max-height: 350px; 
@@ -298,15 +307,18 @@
             .config-photo-item { width: calc(50% - 10px); } 
             .config-photo-item img { height: 60px; }
 
-            .modal-content { width: 95%; } /* Aplica al modal de configuración */
-            #fullscreen-image-modal .fullscreen-modal-content { max-width: 95vw; max-height: 95vh; } /* Específico para fullscreen */
-            #fullscreen-details { font-size: 0.8em; max-width: 90%; max-height: 20vh;}
+            #config-fotos-modal .modal-content { width: 95%; } 
+            #fullscreen-image-modal .fullscreen-modal-content { max-width: 95vw; max-height: 95vh; } 
+            #fullscreen-image { max-height: calc(95vh - 70px); } /* Ajuste para móviles */
+            #fullscreen-details { font-size: 0.8em; max-width: 90%; max-height: 15vh;}
         }
          @media (max-width: 480px) {
             .photo-display-item { width: calc(50% - 5px); } 
             .photo-display-item img { height: 70px; }
             .config-photo-item { width: 100%; } 
             .actions-container button { min-width: calc(50% - 4px); } 
+            #fullscreen-image { max-height: calc(95vh - 80px); } /* Más espacio para detalles en pantallas muy pequeñas */
+            #fullscreen-details { font-size: 0.75em; max-height: 20vh;}
          }
     </style>
 </head>
@@ -681,7 +693,7 @@
             });
         }
         document.getElementById('pin-input').value = ''; 
-        document.getElementById('config-fotos-modal').style.display = 'block';
+        document.getElementById('config-fotos-modal').style.display = 'flex'; // Mostrar modal de config
     }
 
     /**
@@ -726,9 +738,10 @@
      * @param {string} imageDetails - Los detalles de la imagen.
      */
     function abrirImagenFullscreen(imageSrc, imageDetails) {
+        const fullscreenModal = document.getElementById('fullscreen-image-modal');
         const fullscreenImage = document.getElementById('fullscreen-image');
         fullscreenImage.src = imageSrc;
-        // Manejador de error para la imagen en pantalla completa
+        
         if (imageSrc.startsWith('http')) {
             fullscreenImage.onerror = function() {
                 this.alt = 'Error al cargar imagen en pantalla completa';
@@ -736,9 +749,8 @@
                 console.warn('No se pudo cargar la imagen externa en pantalla completa: ' + imageSrc);
             };
         } else {
-             fullscreenImage.onerror = null; // Limpiar manejador de error para imágenes base64
+             fullscreenImage.onerror = null; 
         }
-
 
         const detailsDiv = document.getElementById('fullscreen-details');
         if (imageDetails && imageDetails.trim() !== '') {
@@ -748,7 +760,7 @@
             detailsDiv.textContent = '';
             detailsDiv.style.display = 'none';
         }
-        document.getElementById('fullscreen-image-modal').style.display = 'flex';
+        fullscreenModal.style.display = 'flex'; // Asegurar que se muestre con flex para centrar
     }
 
     /**
@@ -756,6 +768,8 @@
      */
     function cerrarImagenFullscreen(event, forceClose = false) {
         const modal = document.getElementById('fullscreen-image-modal');
+        // Cerrar si se hace clic en el fondo del modal (fuera de .fullscreen-modal-content), 
+        // en el botón X, o en la propia imagen (que está dentro de .fullscreen-modal-content)
         if (forceClose || (event && (event.target === modal || event.target.id === 'fullscreen-image'))) { 
             modal.style.display = 'none';
             document.getElementById('fullscreen-image').src = ''; 
@@ -791,7 +805,7 @@
                 id: 'manual_foto_' + (index + 1),
                 src: url,
                 name: 'Página Manual ' + (index + 1),
-                details: 'Página ' + (index + 1) + ' del manual de servicio.' // Detalle por defecto
+                details: 'Página ' + (index + 1) + ' del manual de servicio.' 
             });
         });
 
@@ -804,7 +818,7 @@
 
         window.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
-                if (document.getElementById('config-fotos-modal').style.display === 'block') {
+                if (document.getElementById('config-fotos-modal').style.display === 'flex') { // Cambiado a flex
                     cerrarModalConfiguracionFotos();
                 }
                 if (document.getElementById('fullscreen-image-modal').style.display === 'flex') {

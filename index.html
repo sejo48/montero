@@ -10,16 +10,73 @@
         body {
             font-family: 'Inter', Arial, sans-serif;
         }
-        /* Estilos personalizados adicionales si son necesarios */
-        .modal-overlay {
+        /* Estilos personalizados para el modal y transiciones */
+        .modal-overlay, #imagenCompletaModal {
             transition: opacity 0.3s ease-in-out;
         }
-        .modal-content {
+        .modal-content, #imagenCompletaModal #imagenCompletaContenedor img, #imagenCompletaModal #imagenCompletaContenedor textarea {
             transition: transform 0.3s ease-in-out;
         }
-        /* Ocultar scrollbars en iframes de forma más robusta */
+        /* Ocultar scrollbars en iframes y asegurar que no tengan borde */
         iframe {
-            border: none; /* Elimina el borde por defecto */
+            border: none; 
+        }
+        /* Estilo para las imágenes de la galería */
+        .gallery-image {
+            width: 100%;
+            height: 150px; /* Altura fija para las miniaturas */
+            object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+            border-radius: 0.5rem; /* Esquinas redondeadas */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+            cursor: pointer; /* Indica que es clickeable */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .gallery-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Estilos para el modal de imagen a pantalla completa */
+        #imagenCompletaSrc {
+            border-radius: 0.5rem; /* Esquinas redondeadas para la imagen grande */
+            box-shadow: 0 0 30px rgba(0,0,0,0.5); /* Sombra más pronunciada */
+        }
+        #botonEliminarImagen {
+            background-color: rgba(239, 68, 68, 0.8); /* Rojo semitransparente */
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
+            line-height: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #botonEliminarImagen:hover {
+            background-color: rgba(220, 38, 38, 1); /* Rojo más opaco */
+        }
+        #detallesTextarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 8px;
+            border: 1px solid #4A5568; /* gris oscuro */
+            border-radius: 0.375rem; /* esquinas redondeadas */
+            background-color: #2D3748; /* fondo gris más oscuro */
+            color: #E2E8F0; /* texto claro */
+            margin-top: 0.75rem; /* mt-3 */
+            font-size: 0.875rem; /* text-sm */
+        }
+        /* Transición para el contenedor de acciones colapsable */
+        .acciones-contenedor {
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            overflow: hidden;
+            max-height: 0; /* Inicialmente colapsado */
+            opacity: 0; /* Inicialmente transparente */
+        }
+        .acciones-contenedor.visible {
+            max-height: 500px; /* Altura suficiente para los botones, ajustar si es necesario */
+            opacity: 1;
         }
     </style>
 </head>
@@ -35,7 +92,6 @@
 
             <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
                 <h2 class="text-2xl font-semibold text-sky-600 mb-4 border-b-2 border-sky-200 pb-2">Mitsubishi Montero Sport 1999</h2>
-                
                 <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
                     <div><p><strong>Motor:</strong> 6G72 (3.0L V6 SOHC 24 válvulas)</p></div>
                     <div><p><strong>Potencia:</strong> 173 hp @ 5,000 rpm</p></div>
@@ -49,28 +105,42 @@
                     <div><p><strong>Color exterior:</strong> 4636</p></div>
                     <div><p><strong>Color interior:</strong> P85S74</p></div>
                 </div>
-
-                <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <button onclick="mostrarMensaje('Galería Montero', 'Próximamente: Galería de fotos del Mitsubishi Montero Sport.')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        📷 Fotos
+                
+                <div class="mt-4">
+                    <button 
+                        id="toggleBotonMontero"
+                        onclick="toggleAcciones('Montero')" 
+                        class="md:hidden bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md w-full text-left mb-3 transition-all duration-300 ease-in-out flex justify-between items-center"
+                        aria-expanded="false"
+                        aria-controls="accionesContenedorMontero">
+                        <span id="toggleTextoMontero">Acciones del Vehículo</span>
+                        <span id="iconoToggleMontero" class="transform transition-transform duration-300">☰</span>
                     </button>
-                    <button onclick="mostrarMensaje('Mantenimiento Montero', 'Próximamente: Historial de mantenimientos del Mitsubishi Montero Sport.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        🛠 Mantenimiento
-                    </button>
-                    <button onclick="mostrarMensaje('Recordatorios Montero', 'Recordatorio: Revisión anual pendiente para el Mitsubishi Montero Sport.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        📅 Recordatorios
-                    </button>
-                    <button onclick="mostrarManual('manualMontero', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        📄 Ver Manual PDF
-                    </button>
+                    <div id="accionesContenedorMontero" class="acciones-contenedor md:flex md:flex-row md:flex-wrap md:gap-3 md:justify-start md:max-h-none md:opacity-100 md:overflow-visible">
+                        <button onclick="abrirInputGaleria('Montero')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
+                            📷 Fotos
+                        </button>
+                        <input type="file" id="galeriaInputMontero" multiple accept="image/*" class="hidden" onchange="mostrarImagenesSeleccionadas(event, 'galeriaDisplayMontero', 'galeriaMensajeMontero', 'Montero')">
+                        
+                        <button onclick="mostrarMensaje('Mantenimiento Montero', 'Próximamente: Historial de mantenimientos del Mitsubishi Montero Sport.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
+                            🛠 Mantenimiento
+                        </button>
+                        <button onclick="mostrarMensaje('Recordatorios Montero', 'Recordatorio: Revisión anual pendiente para el Mitsubishi Montero Sport.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
+                            📅 Recordatorios
+                        </button>
+                        <button onclick="mostrarManual('manualMontero', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto">
+                            📄 Ver Manual PDF
+                        </button>
+                    </div>
                 </div>
-                <iframe id="manualMontero" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
+
+                <p id="galeriaMensajeMontero" class="text-sm text-gray-600 mt-3 hidden"></p>
+                <div id="galeriaDisplayMontero" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div> <iframe id="manualMontero" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
                 <p id="manualMonteroError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
             </article>
 
             <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
                 <h2 class="text-2xl font-semibold text-sky-600 mb-4 border-b-2 border-sky-200 pb-2">Mitsubishi Lancer 2000</h2>
-                
                 <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
                     <div><p><strong>Modelo:</strong> CK4ASNJEL</p></div>
                     <div><p><strong>Motor:</strong> 4G92 (1.6L DOHC 16V)</p></div>
@@ -82,32 +152,46 @@
                     <div><p><strong>Opciones:</strong> 83A H94</p></div>
                 </div>
 
-                <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                    <button onclick="mostrarMensaje('Galería Lancer', 'Próximamente: Galería de fotos del Mitsubishi Lancer.')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        📷 Fotos
+                <div class="mt-4">
+                    <button 
+                        id="toggleBotonLancer"
+                        onclick="toggleAcciones('Lancer')" 
+                        class="md:hidden bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md w-full text-left mb-3 transition-all duration-300 ease-in-out flex justify-between items-center"
+                        aria-expanded="false"
+                        aria-controls="accionesContenedorLancer">
+                        <span id="toggleTextoLancer">Acciones del Vehículo</span>
+                        <span id="iconoToggleLancer" class="transform transition-transform duration-300">☰</span>
                     </button>
-                    <button onclick="mostrarMensaje('Mantenimiento Lancer', 'Próximamente: Historial de mantenimientos del Mitsubishi Lancer.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        🛠 Mantenimiento
-                    </button>
-                    <button onclick="mostrarMensaje('Recordatorios Lancer', 'Recordatorio: Cambio de aceite en junio para el Mitsubishi Lancer.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        📅 Recordatorios
-                    </button>
-                    <button onclick="mostrarManual('manualLancer', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                        📄 Ver Manual PDF
-                    </button>
+                    <div id="accionesContenedorLancer" class="acciones-contenedor md:flex md:flex-row md:flex-wrap md:gap-3 md:justify-start md:max-h-none md:opacity-100 md:overflow-visible">
+                        <button onclick="abrirInputGaleria('Lancer')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
+                            📷 Fotos
+                        </button>
+                        <input type="file" id="galeriaInputLancer" multiple accept="image/*" class="hidden" onchange="mostrarImagenesSeleccionadas(event, 'galeriaDisplayLancer', 'galeriaMensajeLancer', 'Lancer')">
+                        
+                        <button onclick="mostrarMensaje('Mantenimiento Lancer', 'Próximamente: Historial de mantenimientos del Mitsubishi Lancer.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
+                            🛠 Mantenimiento
+                        </button>
+                        <button onclick="mostrarMensaje('Recordatorios Lancer', 'Recordatorio: Cambio de aceite en junio para el Mitsubishi Lancer.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto mb-2 md:mb-0">
+                            📅 Recordatorios
+                        </button>
+                        <button onclick="mostrarManual('manualLancer', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full md:w-auto">
+                            📄 Ver Manual PDF
+                        </button>
+                    </div>
                 </div>
-                <iframe id="manualLancer" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
-                 <p id="manualLancerError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
-            </article>
 
+                <p id="galeriaMensajeLancer" class="text-sm text-gray-600 mt-3 hidden"></p>
+                <div id="galeriaDisplayLancer" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div> <iframe id="manualLancer" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
+                <p id="manualLancerError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
+            </article>
         </main>
     </div>
 
-    <div id="mensajeModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+    <div id="mensajeModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50 opacity-0">
         <div class="modal-content bg-white p-6 rounded-lg shadow-xl max-w-sm w-full transform scale-95">
             <div class="flex justify-between items-center mb-4">
                 <h3 id="mensajeModalTitulo" class="text-xl font-semibold text-sky-700">Mensaje</h3>
-                <button onclick="cerrarMensaje()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                <button onclick="cerrarMensaje()" class="text-gray-500 hover:text-gray-700 text-2xl" aria-label="Cerrar mensaje">&times;</button>
             </div>
             <p id="mensajeModalContenido" class="text-gray-700"></p>
             <div class="mt-6 text-right">
@@ -118,122 +202,301 @@
         </div>
     </div>
 
+    <div id="imagenCompletaModal" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center p-4 hidden z-[60] opacity-0" role="dialog" aria-modal="true" aria-labelledby="imagenCompletaTituloModal">
+        <div class="absolute top-2 right-2 md:top-4 md:right-4 flex items-center space-x-2 z-10">
+            <button id="botonEliminarImagen" onclick="eliminarImagenActualDesdeLightbox()" title="Eliminar imagen" aria-label="Eliminar imagen">&times;</button>
+            <button onclick="cerrarImagenCompleta()" class="text-white text-3xl md:text-4xl font-bold hover:text-gray-300 bg-black bg-opacity-30 rounded-full p-1 leading-none" aria-label="Cerrar imagen">&times;</button>
+        </div>
+        
+        <div id="imagenCompletaContenedor" class="relative w-full max-w-3xl max-h-[90vh] flex flex-col items-center">
+            <img id="imagenCompletaSrc" src="" alt="Imagen a pantalla completa" class="max-w-[95vw] max-h-[70vh] object-contain mb-3">
+            <div class="w-full px-2">
+                <p id="imagenCompletaNombre" class="text-white text-center text-sm md:text-base mb-1"></p>
+                <textarea id="detallesTextarea" placeholder="Añade detalles aquí..." aria-label="Detalles de la imagen"></textarea>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Variable para rastrear el iframe actualmente visible y su botón asociado
         let visibleIframeId = null;
         let activeButton = null;
+        let galeriasData = { Montero: [], Lancer: [] };
+        let currentLightboxImageInfo = { sufijo: null, index: null };
 
         /**
-         * Muestra u oculta el manual PDF.
-         * Si se hace clic en el mismo botón, oculta el PDF.
-         * Si se hace clic en un botón diferente, oculta el PDF anterior (si existe) y muestra el nuevo.
-         * @param {string} id - El ID del iframe del manual.
-         * @param {HTMLElement} buttonElement - El botón que fue clickeado.
+         * Alterna la visibilidad del contenedor de acciones para un vehículo específico en vista móvil.
+         * @param {string} sufijoVehiculo - El sufijo identificador del vehículo (ej. 'Montero').
          */
+        function toggleAcciones(sufijoVehiculo) {
+            const contenedorAcciones = document.getElementById('accionesContenedor' + sufijoVehiculo);
+            const botonToggle = document.getElementById('toggleBoton' + sufijoVehiculo);
+            const iconoToggle = document.getElementById('iconoToggle' + sufijoVehiculo);
+            const textoBoton = document.getElementById('toggleTexto' + sufijoVehiculo);
+
+            const isExpanded = botonToggle.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                // Colapsar
+                contenedorAcciones.classList.remove('visible');
+                // Las clases de Tailwind 'acciones-contenedor' manejan la animación de colapso (max-height y opacity)
+                // Para asegurar que md:flex funcione, no añadimos 'hidden' aquí, la animación lo oculta.
+                // En su lugar, las clases base de 'acciones-contenedor' lo ocultan inicialmente.
+                // Y 'md:flex', 'md:max-h-none', 'md:opacity-100' lo fuerzan a ser visible en pantallas md+
+                botonToggle.setAttribute('aria-expanded', 'false');
+                if (iconoToggle) iconoToggle.innerHTML = '☰'; // Icono de hamburguesa
+                if (textoBoton) textoBoton.textContent = 'Acciones del Vehículo';
+                if (iconoToggle) iconoToggle.classList.remove('rotate-180');
+
+            } else {
+                // Expandir
+                contenedorAcciones.classList.add('visible');
+                // Las clases de Tailwind 'acciones-contenedor visible' manejan la animación de expansión.
+                botonToggle.setAttribute('aria-expanded', 'true');
+                if (iconoToggle) iconoToggle.innerHTML = '&times;'; // Icono de X (cerrar)
+                if (textoBoton) textoBoton.textContent = 'Ocultar Acciones';
+                if (iconoToggle) iconoToggle.classList.add('rotate-180');
+            }
+        }
+
+
+        function abrirInputGaleria(sufijoVehiculo) {
+            document.getElementById('galeriaInput' + sufijoVehiculo).click();
+        }
+
+        function mostrarImagenesSeleccionadas(event, idGaleriaDisplay, idGaleriaMensaje, sufijoVehiculo) {
+            const files = event.target.files;
+            // Reiniciar galería para este vehículo al cargar nuevas imágenes
+            galeriasData[sufijoVehiculo] = []; 
+            // Limpiar visualización anterior antes de procesar nuevos archivos
+            document.getElementById(idGaleriaDisplay).innerHTML = '';
+            document.getElementById(idGaleriaDisplay).classList.add('hidden'); // Ocultar hasta que haya imágenes válidas
+
+
+            if (!files || files.length === 0) {
+                actualizarMensajeGaleria(idGaleriaMensaje, 0, 0);
+                event.target.value = null;
+                return;
+            }
+
+            let imagesProcessedCount = 0;
+            const totalFiles = files.length;
+            let validImagesCount = 0;
+
+            Array.from(files).forEach((file) => {
+                if (!file.type.startsWith('image/')) {
+                    console.warn(`El archivo "${file.name}" no es una imagen y será omitido.`);
+                    imagesProcessedCount++;
+                    if (imagesProcessedCount === totalFiles) {
+                         // Solo regenerar si todos los archivos han sido procesados
+                        regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
+                    }
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imageData = {
+                        src: e.target.result,
+                        name: file.name,
+                        type: file.type,
+                        details: "" 
+                    };
+                    galeriasData[sufijoVehiculo].push(imageData);
+                    // No incrementar validImagesCount aquí, se cuenta al regenerar
+                    imagesProcessedCount++;
+                    if (imagesProcessedCount === totalFiles) {
+                        regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
+                    }
+                };
+                reader.onerror = () => {
+                    console.error(`Error al leer el archivo ${file.name}.`);
+                    imagesProcessedCount++;
+                    if (imagesProcessedCount === totalFiles) {
+                        // Considerar un mensaje de error específico si es necesario
+                        regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+            event.target.value = null;
+        }
+        
+        function regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje) {
+            const galeriaDisplay = document.getElementById(idGaleriaDisplay);
+            galeriaDisplay.innerHTML = ''; // Limpiar galería existente
+
+            const vehicleImages = galeriasData[sufijoVehiculo];
+            if (!vehicleImages || vehicleImages.length === 0) {
+                galeriaDisplay.classList.add('hidden'); // Ocultar si no hay imágenes
+                 // No mostrar mensaje de "No hay imágenes" si el input acaba de ser limpiado y no se seleccionó nada.
+                // El mensaje se actualiza en mostrarImagenesSeleccionadas o actualizarMensajeGaleria
+            } else {
+                galeriaDisplay.classList.remove('hidden'); // Mostrar si hay imágenes
+                vehicleImages.forEach((imageData, index) => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageData.src;
+                    imgElement.alt = `Miniatura de ${imageData.name}`;
+                    imgElement.classList.add('gallery-image');
+                    imgElement.dataset.sufijo = sufijoVehiculo;
+                    imgElement.dataset.index = index;
+                    imgElement.onclick = () => mostrarImagenCompleta(sufijoVehiculo, index);
+                    galeriaDisplay.appendChild(imgElement);
+                });
+            }
+            // Actualizar el mensaje basado en las imágenes realmente en galeriasData[sufijoVehiculo]
+            // El total de intentos es un poco más complejo de rastrear hasta aquí, así que simplificamos.
+            actualizarMensajeGaleria(idGaleriaMensaje, vehicleImages.length, vehicleImages.length); 
+        }
+
+        function actualizarMensajeGaleria(idGaleriaMensaje, cargadas, totalIntentosOriginales, errorGeneral = false) {
+            const mensajeEl = document.getElementById(idGaleriaMensaje);
+            if (errorGeneral) { // Un error general al procesar archivos
+                mensajeEl.textContent = `Error al cargar algunas imágenes. ${cargadas} válida(s) procesada(s).`;
+            } else if (cargadas > 0) {
+                mensajeEl.textContent = `${cargadas} imágen(es) cargada(s) exitosamente.`;
+                // Si se quisiera rastrear archivos omitidos, se necesitaría pasar esa info.
+            } else if (totalIntentosOriginales === 0 && cargadas === 0) { // No se seleccionó nada o se limpió
+                 mensajeEl.textContent = 'No se seleccionaron imágenes.';
+            } else { // Se intentó cargar pero ninguna fue válida
+                mensajeEl.textContent = 'Ningún archivo seleccionado era una imagen válida o hubo errores.';
+            }
+            mensajeEl.classList.remove('hidden');
+        }
+
+
+        function mostrarImagenCompleta(sufijoVehiculo, index) {
+            const imageData = galeriasData[sufijoVehiculo][index];
+            if (!imageData) return;
+
+            currentLightboxImageInfo = { sufijo: sufijoVehiculo, index: index };
+
+            document.getElementById('imagenCompletaSrc').src = imageData.src;
+            document.getElementById('imagenCompletaSrc').alt = `Imagen: ${imageData.name}`;
+            document.getElementById('imagenCompletaNombre').textContent = `Nombre: ${imageData.name}`;
+            
+            const detallesTextarea = document.getElementById('detallesTextarea');
+            detallesTextarea.value = imageData.details || "";
+            detallesTextarea.oninput = function() {
+                galeriasData[currentLightboxImageInfo.sufijo][currentLightboxImageInfo.index].details = this.value;
+            };
+            
+            const modal = document.getElementById('imagenCompletaModal');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+        }
+
+        function cerrarImagenCompleta() {
+            const modal = document.getElementById('imagenCompletaModal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('imagenCompletaSrc').src = ""; 
+                document.getElementById('detallesTextarea').value = "";
+                currentLightboxImageInfo = { sufijo: null, index: null }; 
+            }, 300);
+        }
+
+        function eliminarImagenActualDesdeLightbox() {
+            if (currentLightboxImageInfo.sufijo === null || currentLightboxImageInfo.index === null) return;
+
+            const { sufijo, index } = currentLightboxImageInfo;
+            galeriasData[sufijo].splice(index, 1); 
+            
+            cerrarImagenCompleta(); 
+
+            const galeriaDisplayId = 'galeriaDisplay' + sufijo;
+            const galeriaMensajeId = 'galeriaMensaje' + sufijo;
+            regenerarGaleria(sufijo, galeriaDisplayId, galeriaMensajeId);
+             // Actualizar mensaje después de eliminar
+            if (galeriasData[sufijo].length === 0) {
+                document.getElementById(galeriaMensajeId).textContent = 'No hay imágenes para mostrar.';
+            } else {
+                 document.getElementById(galeriaMensajeId).textContent = `${galeriasData[sufijo].length} imágen(es) en la galería.`;
+            }
+        }
+
         function mostrarManual(id, buttonElement) {
             const pdfIframe = document.getElementById(id);
             const pdfError = document.getElementById(id + 'Error');
-
-            // Ocultar todos los iframes y resetear botones antes de mostrar uno nuevo
             document.querySelectorAll('iframe').forEach(iframe => {
-                if (iframe.id !== id) { // No ocultar el que estamos por mostrar/ocultar
+                if (iframe.id !== id) {
                     iframe.style.height = '0px';
-                    iframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]'); // Clases de altura responsiva
+                    iframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
                 }
             });
             if (activeButton && activeButton !== buttonElement) {
-                 activeButton.classList.remove('bg-red-700'); // Estado normal del botón anterior
+                 activeButton.classList.remove('bg-red-700');
                  activeButton.classList.add('bg-red-500');
             }
-
-
             if (pdfIframe) {
                 if (pdfIframe.style.height === '0px' || pdfIframe.style.height === '') {
-                    // Mostrar el PDF
-                    pdfIframe.style.height = 'calc(100vh - 200px)'; // Altura para móviles
-                    if (window.innerWidth >= 768) { // md breakpoint en Tailwind
-                        pdfIframe.style.height = '600px'; // Altura para tablets y desktops
-                    }
+                    pdfIframe.style.height = 'calc(100vh - 200px)';
+                    if (window.innerWidth >= 768) { pdfIframe.style.height = '600px';}
                     pdfIframe.classList.add('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    
-                    // Cambiar estilo del botón activo
-                    buttonElement.classList.remove('bg-red-500');
-                    buttonElement.classList.add('bg-red-700'); // Estado activo del botón
-                    activeButton = buttonElement;
-                    visibleIframeId = id;
-
-                    // Manejo de error de carga del iframe
-                    pdfIframe.onload = () => {
-                        pdfError.classList.add('hidden');
-                    };
+                    buttonElement.classList.remove('bg-red-500'); buttonElement.classList.add('bg-red-700');
+                    activeButton = buttonElement; visibleIframeId = id;
+                    pdfIframe.onload = () => pdfError.classList.add('hidden');
                     pdfIframe.onerror = () => {
-                        pdfError.classList.remove('hidden');
-                        pdfIframe.style.height = '0px'; // Ocultar si hay error
+                        pdfError.classList.remove('hidden'); pdfIframe.style.height = '0px';
                         pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
                     };
                 } else {
-                    // Ocultar el PDF si ya está visible (clic en el mismo botón)
                     pdfIframe.style.height = '0px';
                     pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    buttonElement.classList.remove('bg-red-700'); // Estado normal
-                    buttonElement.classList.add('bg-red-500');
-                    activeButton = null;
-                    visibleIframeId = null;
-                    pdfError.classList.add('hidden');
+                    buttonElement.classList.remove('bg-red-700'); buttonElement.classList.add('bg-red-500');
+                    activeButton = null; visibleIframeId = null; pdfError.classList.add('hidden');
                 }
             }
         }
         
-        // Ajustar altura del iframe en redimensionamiento de ventana si está visible
         window.addEventListener('resize', () => {
             if (visibleIframeId) {
                 const pdfIframe = document.getElementById(visibleIframeId);
                 if (pdfIframe && (pdfIframe.style.height !== '0px' && pdfIframe.style.height !== '')) {
                      pdfIframe.style.height = 'calc(100vh - 200px)';
-                    if (window.innerWidth >= 768) { // md breakpoint
-                        pdfIframe.style.height = '600px';
-                    }
+                    if (window.innerWidth >= 768) { pdfIframe.style.height = '600px'; }
                 }
             }
         });
 
-        /**
-         * Muestra un mensaje en el modal.
-         * @param {string} titulo - El título del modal.
-         * @param {string} contenido - El contenido del mensaje.
-         */
         function mostrarMensaje(titulo, contenido) {
             document.getElementById('mensajeModalTitulo').textContent = titulo;
             document.getElementById('mensajeModalContenido').textContent = contenido;
             const modal = document.getElementById('mensajeModal');
-            modal.classList.remove('hidden');
-            // Forzar reflow para la transición
-            void modal.offsetWidth; 
-            modal.classList.remove('opacity-0');
-            modal.classList.add('opacity-100');
+            modal.classList.remove('hidden'); void modal.offsetWidth; 
+            modal.classList.remove('opacity-0'); modal.classList.add('opacity-100');
             modal.querySelector('.modal-content').classList.remove('scale-95');
             modal.querySelector('.modal-content').classList.add('scale-100');
         }
 
-        /**
-         * Cierra el modal de mensajes.
-         */
         function cerrarMensaje() {
             const modal = document.getElementById('mensajeModal');
-            modal.classList.remove('opacity-100');
-            modal.classList.add('opacity-0');
+            modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
             modal.querySelector('.modal-content').classList.remove('scale-100');
             modal.querySelector('.modal-content').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300); // Coincidir con la duración de la transición
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
-        // Cerrar modal con la tecla Escape
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
-                cerrarMensaje();
+                const imagenModal = document.getElementById('imagenCompletaModal');
+                if (!imagenModal.classList.contains('hidden')) {
+                    cerrarImagenCompleta(); return;
+                }
+                const mensajeModal = document.getElementById('mensajeModal');
+                 if (!mensajeModal.classList.contains('hidden')) {
+                    cerrarMensaje();
+                }
             }
+        });
+
+        // Inicializar galerías y mensajes al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            regenerarGaleria('Montero', 'galeriaDisplayMontero', 'galeriaMensajeMontero');
+            regenerarGaleria('Lancer', 'galeriaDisplayLancer', 'galeriaMensajeLancer');
         });
 
     </script>

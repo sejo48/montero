@@ -1,68 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ficha Técnica Vehículos de Jorge</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f9f9f9; }
-    h1, h2 { background: #003366; color: white; padding: 10px; }
-    .vehiculo { background: white; margin-bottom: 20px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .botones button { margin: 5px; padding: 10px 15px; font-size: 14px; cursor: pointer; }
-    .seccion { margin-top: 10px; }
-    iframe { width: 100%; height: 500px; border: none; margin-top: 10px; display: none; }
-  </style>
-  <script>
-    function mostrarManual(id) {
-      const pdfs = document.querySelectorAll('iframe');
-      pdfs.forEach(pdf => pdf.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Técnica Vehículos de Jorge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo para la fuente Inter, si está disponible */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        /* Estilos personalizados adicionales si son necesarios */
+        .modal-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+        /* Ocultar scrollbars en iframes de forma más robusta */
+        iframe {
+            border: none; /* Elimina el borde por defecto */
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 p-4 md:p-8">
 
-  <h1>Ficha Técnica - Vehículos de Jorge</h1>
+    <div class="max-w-5xl mx-auto">
 
-  <div class="vehiculo">
-    <h2>Mitsubishi Montero Sport 1999</h2>
-    <div class="seccion">
-      <p><strong>Motor:</strong> 6G72 (3.0L V6)</p>
-      <p><strong>Transmisión:</strong> Automática R4AW3</p>
-      <p><strong>Neumáticos:</strong> 265/70R15 110S</p>
-      <p><strong>Presión:</strong> 26 PSI</p>
-      <p><strong>Peso bruto:</strong> 2.268 kg (5005 lbs)</p>
-      <p><strong>VIN:</strong> JA4LS31P4WP018774</p>
-      <p><strong>Color exterior:</strong> 4636</p>
-      <p><strong>Color interior:</strong> P85S74</p>
-    </div>
-    <div class="botones">
-      <button onclick="alert('Abrir galería Montero')">📷 Fotos</button>
-      <button onclick="alert('Historial de mantenimientos')">🛠 Mantenimiento</button>
-      <button onclick="alert('Recordatorio: Revisión anual')">📅 Recordatorios</button>
-      <button onclick="mostrarManual('manualMontero')">📄 Ver Manual PDF</button>
-    </div>
-    <iframe id="manualMontero" src="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview"></iframe>
-  </div>
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-sky-700 bg-sky-100 p-4 rounded-lg shadow-md">Ficha Técnica - Vehículos de Jorge</h1>
+        </header>
 
-  <div class="vehiculo">
-    <h2>Mitsubishi Lancer 2000</h2>
-    <div class="seccion">
-      <p><strong>Modelo:</strong> CK4ASNJEL</p>
-      <p><strong>Motor:</strong> 4G92</p>
-      <p><strong>Transmisión:</strong> F5M41 (Manual)</p>
-      <p><strong>Color exterior:</strong> G13D</p>
-      <p><strong>Color interior:</strong> G13</p>
-      <p><strong>Opciones:</strong> 83A H94</p>
-    </div>
-    <div class="botones">
-      <button onclick="alert('Abrir galería Lancer')">📷 Fotos</button>
-      <button onclick="alert('Historial de mantenimientos')">🛠 Mantenimiento</button>
-      <button onclick="alert('Recordatorio: Cambio de aceite en junio')">📅 Recordatorios</button>
-      <button onclick="mostrarManual('manualLancer')">📄 Ver Manual PDF</button>
-    </div>
-    <iframe id="manualLancer" src="https://drive.google.com/file/d/1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf/preview"></iframe>
-  </div>
+        <main class="space-y-8">
 
+            <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <h2 class="text-2xl font-semibold text-sky-600 mb-4 border-b-2 border-sky-200 pb-2">Mitsubishi Montero Sport 1999</h2>
+                
+                <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
+                    <div><p><strong>Motor:</strong> 6G72 (3.0L V6 SOHC 24 válvulas)</p></div>
+                    <div><p><strong>Potencia:</strong> 173 hp @ 5,000 rpm</p></div>
+                    <div><p><strong>Torque:</strong> 228 lb-ft @ 3,500 rpm</p></div>
+                    <div><p><strong>Transmisión:</strong> Automática R4AW3</p></div>
+                    <div><p><strong>Tracción:</strong> 4x2 (trasera)</p></div>
+                    <div><p><strong>Neumáticos:</strong> 265/70R15 110S</p></div>
+                    <div><p><strong>Presión:</strong> 26 PSI</p></div>
+                    <div><p><strong>Peso bruto:</strong> 2.268 kg (5005 lbs)</p></div>
+                    <div><p><strong>VIN:</strong> JA4LS31P4WP018774</p></div>
+                    <div><p><strong>Color exterior:</strong> 4636</p></div>
+                    <div><p><strong>Color interior:</strong> P85S74</p></div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <button onclick="mostrarMensaje('Galería Montero', 'Próximamente: Galería de fotos del Mitsubishi Montero Sport.')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        📷 Fotos
+                    </button>
+                    <button onclick="mostrarMensaje('Mantenimiento Montero', 'Próximamente: Historial de mantenimientos del Mitsubishi Montero Sport.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        🛠 Mantenimiento
+                    </button>
+                    <button onclick="mostrarMensaje('Recordatorios Montero', 'Recordatorio: Revisión anual pendiente para el Mitsubishi Montero Sport.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        📅 Recordatorios
+                    </button>
+                    <button onclick="mostrarManual('manualMontero', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        📄 Ver Manual PDF
+                    </button>
+                </div>
+                <iframe id="manualMontero" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
+                <p id="manualMonteroError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
+            </article>
+
+            <article class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <h2 class="text-2xl font-semibold text-sky-600 mb-4 border-b-2 border-sky-200 pb-2">Mitsubishi Lancer 2000</h2>
+                
+                <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
+                    <div><p><strong>Modelo:</strong> CK4ASNJEL</p></div>
+                    <div><p><strong>Motor:</strong> 4G92 (1.6L DOHC 16V)</p></div>
+                    <div><p><strong>Potencia:</strong> 113 hp @ 6,000 rpm</p></div>
+                    <div><p><strong>Torque:</strong> 137 Nm @ 4,500 rpm</p></div>
+                    <div><p><strong>Transmisión:</strong> Manual F5M41</p></div>
+                    <div><p><strong>Color exterior:</strong> G13D</p></div>
+                    <div><p><strong>Color interior:</strong> G13</p></div>
+                    <div><p><strong>Opciones:</strong> 83A H94</p></div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <button onclick="mostrarMensaje('Galería Lancer', 'Próximamente: Galería de fotos del Mitsubishi Lancer.')" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        📷 Fotos
+                    </button>
+                    <button onclick="mostrarMensaje('Mantenimiento Lancer', 'Próximamente: Historial de mantenimientos del Mitsubishi Lancer.')" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        🛠 Mantenimiento
+                    </button>
+                    <button onclick="mostrarMensaje('Recordatorios Lancer', 'Recordatorio: Cambio de aceite en junio para el Mitsubishi Lancer.')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        📅 Recordatorios
+                    </button>
+                    <button onclick="mostrarManual('manualLancer', this)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
+                        📄 Ver Manual PDF
+                    </button>
+                </div>
+                <iframe id="manualLancer" class="w-full h-0 mt-4 rounded-lg shadow-inner overflow-hidden transition-all duration-500 ease-in-out" src="https://docs.google.com/gview?url=https://drive.google.com/uc?id=1Bodq-vN6s0JJ60ueDhhxvYbOWRXHQaqf&embedded=true" allow="fullscreen"></iframe>
+                 <p id="manualLancerError" class="text-red-500 mt-2 hidden">No se pudo cargar el manual. Por favor, verifica el enlace o inténtalo más tarde.</p>
+            </article>
+
+        </main>
+    </div>
+
+    <div id="mensajeModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl max-w-sm w-full transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="mensajeModalTitulo" class="text-xl font-semibold text-sky-700">Mensaje</h3>
+                <button onclick="cerrarMensaje()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+            <p id="mensajeModalContenido" class="text-gray-700"></p>
+            <div class="mt-6 text-right">
+                <button onclick="cerrarMensaje()" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg shadow hover:shadow-md transition-all duration-200">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variable para rastrear el iframe actualmente visible y su botón asociado
+        let visibleIframeId = null;
+        let activeButton = null;
+
+        /**
+         * Muestra u oculta el manual PDF.
+         * Si se hace clic en el mismo botón, oculta el PDF.
+         * Si se hace clic en un botón diferente, oculta el PDF anterior (si existe) y muestra el nuevo.
+         * @param {string} id - El ID del iframe del manual.
+         * @param {HTMLElement} buttonElement - El botón que fue clickeado.
+         */
+        function mostrarManual(id, buttonElement) {
+            const pdfIframe = document.getElementById(id);
+            const pdfError = document.getElementById(id + 'Error');
+
+            // Ocultar todos los iframes y resetear botones antes de mostrar uno nuevo
+            document.querySelectorAll('iframe').forEach(iframe => {
+                if (iframe.id !== id) { // No ocultar el que estamos por mostrar/ocultar
+                    iframe.style.height = '0px';
+                    iframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]'); // Clases de altura responsiva
+                }
+            });
+            if (activeButton && activeButton !== buttonElement) {
+                 activeButton.classList.remove('bg-red-700'); // Estado normal del botón anterior
+                 activeButton.classList.add('bg-red-500');
+            }
+
+
+            if (pdfIframe) {
+                if (pdfIframe.style.height === '0px' || pdfIframe.style.height === '') {
+                    // Mostrar el PDF
+                    pdfIframe.style.height = 'calc(100vh - 200px)'; // Altura para móviles
+                    if (window.innerWidth >= 768) { // md breakpoint en Tailwind
+                        pdfIframe.style.height = '600px'; // Altura para tablets y desktops
+                    }
+                    pdfIframe.classList.add('h-[calc(100vh-200px)]', 'md:h-[600px]');
+                    
+                    // Cambiar estilo del botón activo
+                    buttonElement.classList.remove('bg-red-500');
+                    buttonElement.classList.add('bg-red-700'); // Estado activo del botón
+                    activeButton = buttonElement;
+                    visibleIframeId = id;
+
+                    // Manejo de error de carga del iframe
+                    pdfIframe.onload = () => {
+                        pdfError.classList.add('hidden');
+                    };
+                    pdfIframe.onerror = () => {
+                        pdfError.classList.remove('hidden');
+                        pdfIframe.style.height = '0px'; // Ocultar si hay error
+                        pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
+                    };
+                } else {
+                    // Ocultar el PDF si ya está visible (clic en el mismo botón)
+                    pdfIframe.style.height = '0px';
+                    pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
+                    buttonElement.classList.remove('bg-red-700'); // Estado normal
+                    buttonElement.classList.add('bg-red-500');
+                    activeButton = null;
+                    visibleIframeId = null;
+                    pdfError.classList.add('hidden');
+                }
+            }
+        }
+        
+        // Ajustar altura del iframe en redimensionamiento de ventana si está visible
+        window.addEventListener('resize', () => {
+            if (visibleIframeId) {
+                const pdfIframe = document.getElementById(visibleIframeId);
+                if (pdfIframe && (pdfIframe.style.height !== '0px' && pdfIframe.style.height !== '')) {
+                     pdfIframe.style.height = 'calc(100vh - 200px)';
+                    if (window.innerWidth >= 768) { // md breakpoint
+                        pdfIframe.style.height = '600px';
+                    }
+                }
+            }
+        });
+
+        /**
+         * Muestra un mensaje en el modal.
+         * @param {string} titulo - El título del modal.
+         * @param {string} contenido - El contenido del mensaje.
+         */
+        function mostrarMensaje(titulo, contenido) {
+            document.getElementById('mensajeModalTitulo').textContent = titulo;
+            document.getElementById('mensajeModalContenido').textContent = contenido;
+            const modal = document.getElementById('mensajeModal');
+            modal.classList.remove('hidden');
+            // Forzar reflow para la transición
+            void modal.offsetWidth; 
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            modal.querySelector('.modal-content').classList.remove('scale-95');
+            modal.querySelector('.modal-content').classList.add('scale-100');
+        }
+
+        /**
+         * Cierra el modal de mensajes.
+         */
+        function cerrarMensaje() {
+            const modal = document.getElementById('mensajeModal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            modal.querySelector('.modal-content').classList.remove('scale-100');
+            modal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Coincidir con la duración de la transición
+        }
+
+        // Cerrar modal con la tecla Escape
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                cerrarMensaje();
+            }
+        });
+
+    </script>
 </body>
 </html>

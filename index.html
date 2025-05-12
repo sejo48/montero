@@ -277,18 +277,27 @@
 
         function mostrarImagenesSeleccionadas(event, idGaleriaDisplay, idGaleriaMensaje, sufijoVehiculo) {
             const files = event.target.files;
-            galeriasData[sufijoVehiculo] = []; 
-            document.getElementById(idGaleriaDisplay).innerHTML = '';
-            document.getElementById(idGaleriaDisplay).classList.add('hidden');
+
+            // Asegurar que el array de datos para la galería exista. NO reiniciar si ya tiene datos.
+            if (!galeriasData[sufijoVehiculo]) {
+                galeriasData[sufijoVehiculo] = [];
+            }
+            // No limpiar galeriasData[sufijoVehiculo] aquí para permitir añadir imágenes.
+
+            // Limpiar la visualización de la galería (HTML) para redibujar todo (antiguas + nuevas).
+            // regenerarGaleria se encargará de esto.
 
             if (!files || files.length === 0) {
-                actualizarMensajeGaleria(idGaleriaMensaje, 0, 0, false, sufijoVehiculo);
+                // Si no se seleccionan nuevos archivos, no es necesario hacer mucho,
+                // la galería ya muestra el estado actual.
+                // Solo limpiar el valor del input.
                 event.target.value = null;
                 return;
             }
 
             let imagesProcessedCount = 0;
             const totalFiles = files.length;
+            let filesSuccessfullyRead = 0;
 
             Array.from(files).forEach((file) => {
                 if (!file.type.startsWith('image/')) {
@@ -296,6 +305,9 @@
                     imagesProcessedCount++;
                     if (imagesProcessedCount === totalFiles) {
                         regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
+                        if (filesSuccessfullyRead === 0 && totalFiles > 0) {
+                            mostrarMensaje('Archivos no válidos', 'Ninguno de los archivos seleccionados era una imagen válida y no se añadieron a la galería.');
+                        }
                     }
                     return;
                 }
@@ -308,10 +320,16 @@
                         type: file.type,
                         details: "" 
                     };
-                    galeriasData[sufijoVehiculo].push(imageData);
+                    galeriasData[sufijoVehiculo].push(imageData); // Añadir la nueva imagen al array existente
+                    filesSuccessfullyRead++;
                     imagesProcessedCount++;
                     if (imagesProcessedCount === totalFiles) {
                         regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
+                         if (filesSuccessfullyRead > 0) {
+                            mostrarMensaje('Imágenes Añadidas', `${filesSuccessfullyRead} nueva(s) imágen(es) añadida(s) a la galería de ${sufijoVehiculo}.`);
+                        } else if (totalFiles > 0) { // Si se procesaron archivos pero ninguno fue válido
+                             mostrarMensaje('Archivos no válidos', 'Ninguno de los archivos seleccionados era una imagen válida y no se añadieron a la galería.');
+                        }
                     }
                 };
                 reader.onerror = () => {
@@ -319,17 +337,17 @@
                     imagesProcessedCount++;
                     if (imagesProcessedCount === totalFiles) {
                         regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje);
-                        actualizarMensajeGaleria(idGaleriaMensaje, galeriasData[sufijoVehiculo].length, totalFiles, true, sufijoVehiculo);
+                        mostrarMensaje('Error de Carga', 'Algunas imágenes no pudieron ser procesadas.');
                     }
                 };
                 reader.readAsDataURL(file);
             });
-            event.target.value = null;
+            event.target.value = null; // Limpiar el input para permitir seleccionar los mismos archivos de nuevo
         }
         
         function regenerarGaleria(sufijoVehiculo, idGaleriaDisplay, idGaleriaMensaje) {
             const galeriaDisplay = document.getElementById(idGaleriaDisplay);
-            galeriaDisplay.innerHTML = ''; 
+            galeriaDisplay.innerHTML = ''; // Limpiar galería existente en la UI
 
             const vehicleImages = galeriasData[sufijoVehiculo];
             if (!vehicleImages || vehicleImages.length === 0) {
@@ -360,9 +378,9 @@
                 mensajeTexto = `${cargadas} imágen(es) en la galería.`;
             } else { 
                 const localStorageKey = LOCAL_STORAGE_KEY_PREFIX + sufijoVehiculo;
-                if (sufijoVehiculo && localStorage.getItem(localStorageKey)) {
+                if (sufijoVehiculo && localStorage.getItem(localStorageKey)) { // Si hay algo guardado y se limpió la sesión actual
                      mensajeTexto = 'Álbum cargado desde el almacenamiento local. Seleccione "Fotos" para añadir más.';
-                } else {
+                } else { // No hay nada en la sesión actual ni guardado
                     mensajeTexto = 'No hay imágenes. Seleccione "Fotos" para añadir.';
                 }
             }
@@ -449,18 +467,15 @@
             if (datosGuardados) {
                 try {
                     galeriasData[sufijoVehiculo] = JSON.parse(datosGuardados);
-                    // No mostrar mensaje de "álbum cargado" aquí, se maneja en actualizarMensajeGaleria
                 } catch (e) {
                     console.error("Error al cargar desde localStorage:", e);
                     localStorage.removeItem(localStorageKey); 
-                    galeriasData[sufijoVehiculo] = []; // Asegurar que esté vacío en memoria si hay error
+                    galeriasData[sufijoVehiculo] = []; 
                 }
             } else {
-                 galeriasData[sufijoVehiculo] = []; // Asegurar que esté vacío si no hay nada en localStorage
+                 galeriasData[sufijoVehiculo] = []; 
             }
-            // Siempre regenerar y actualizar mensaje, incluso si no se cargó nada (para mostrar mensaje inicial)
             regenerarGaleria(sufijoVehiculo, galeriaDisplayId, galeriaMensajeId);
-            // El mensaje de "álbum cargado" o "no hay imágenes" se establece en actualizarMensajeGaleria
         }
 
 
@@ -476,14 +491,9 @@
         }
 
         function mostrarManual(id, buttonElement) {
-            // Esta función ya no se usa si los botones "Ver Manual PDF" se eliminan.
-            // Se puede mantener por si se decide reintroducir la funcionalidad,
-            // o eliminarla si se considera que ya no es necesaria.
             const pdfIframe = document.getElementById(id);
             const pdfError = document.getElementById(id + 'Error');
-            // ... resto de la lógica original de mostrarManual ...
-            // Por ahora, la dejamos, ya que no causa problemas.
-             if (pdfIframe) { // Solo proceder si el iframe existe
+             if (pdfIframe) { 
                 document.querySelectorAll('iframe').forEach(iframe => {
                     if (iframe.id !== id) {
                         iframe.style.height = '0px';
@@ -499,7 +509,7 @@
                     pdfIframe.style.height = 'calc(100vh - 200px)';
                     if (window.innerWidth >= 768) { pdfIframe.style.height = '600px';}
                     pdfIframe.classList.add('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                    if(buttonElement){ // Solo si el botón existe
+                    if(buttonElement){ 
                         buttonElement.classList.remove('bg-red-500'); buttonElement.classList.add('bg-red-700');
                     }
                     activeButton = buttonElement; visibleIframeId = id;
@@ -511,7 +521,7 @@
                 } else {
                     pdfIframe.style.height = '0px';
                     pdfIframe.classList.remove('h-[calc(100vh-200px)]', 'md:h-[600px]');
-                     if(buttonElement){ // Solo si el botón existe
+                     if(buttonElement){ 
                         buttonElement.classList.remove('bg-red-700'); buttonElement.classList.add('bg-red-500');
                      }
                     activeButton = null; visibleIframeId = null; pdfError.classList.add('hidden');
